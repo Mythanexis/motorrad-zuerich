@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Section } from "@/components/site/Section";
-import heroBike from "@/assets/hero-bike.jpg";
+import heroBike from "@/assets/hero-kurs.webp";
 import grundkursImg from "@/assets/course-grundkurs.jpg";
 import wabImg from "@/assets/wab-course.jpg";
 import rentalImg from "@/assets/rental-bikes.jpg";
