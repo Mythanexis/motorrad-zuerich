@@ -8,6 +8,16 @@ import grundkursImg from "@/assets/course-grundkurs.jpg";
 import wabImg from "@/assets/wab-course.jpg";
 import rentalImg from "@/assets/rental-bikes.jpg";
 
+function W({ children, delay }: { children: React.ReactNode; delay: number }) {
+  return (
+    <span className="word-rise-wrap">
+      <span className="word-rise" style={{ animationDelay: `${delay}ms` }}>
+        {children}
+      </span>
+    </span>
+  );
+}
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -30,31 +40,48 @@ function Index() {
       <Header variant="overlay" />
       <main>
         {/* HERO */}
+        <div className="hero-curtain" aria-hidden="true" />
         <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-black text-white">
           <img
             src={heroBike}
             alt="Motorrad im Studiolicht"
-            className="absolute inset-0 h-full w-full object-cover opacity-90"
+            className="hero-img-zoom absolute inset-0 h-full w-full object-cover opacity-90"
             width={1920}
             height={1080}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40" />
-          <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 md:px-10 md:pb-28">
-            <div className="eyebrow mb-6 opacity-80">Saison 2026 · Anmeldung offen</div>
-            <h1 className="display-xl max-w-5xl">
-              Fahren lernen.
+          <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col items-center justify-end px-6 pb-20 md:items-start md:px-10 md:pb-28">
+            <div
+              className="hero-fade-up eyebrow mb-6 text-center opacity-80 md:text-left"
+              style={{ animationDelay: "900ms" }}
+            >
+              Saison 2026 · Anmeldung offen
+            </div>
+            <h1 className="display-xl max-w-5xl text-center md:text-left">
+              <W delay={750}>Fahren</W> <W delay={870}>lernen.</W>
               <br />
-              <span className="opacity-70">Fahren beherrschen.</span>
+              <W delay={1000}>
+                <span className="opacity-70">Fahren</span>
+              </W>{" "}
+              <W delay={1120}>
+                <span className="opacity-70">beherrschen.</span>
+              </W>
             </h1>
-            <p className="mt-8 max-w-md text-base opacity-80 md:text-lg">
+            <p
+              className="hero-fade-up mt-8 max-w-md text-center text-base opacity-80 md:text-left md:text-lg"
+              style={{ animationDelay: "1300ms" }}
+            >
               Motorradkurse in Zürich — vom Grundkurs bis zur Weiterbildung. Geführt von erfahrenen
               Instruktoren in Horgen.
             </p>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <Link to="/kurse" className="btn-pill-solid bg-white text-black">
+            <div
+              className="hero-fade-up mt-10 flex w-full flex-col items-center gap-3 sm:flex-row sm:justify-center md:w-auto md:justify-start"
+              style={{ animationDelay: "1500ms" }}
+            >
+              <Link to="/kurse" className="btn-pill-solid w-4/5 justify-center bg-white text-black sm:w-auto sm:justify-start">
                 Kurse entdecken <ArrowRight className="size-4" />
               </Link>
-              <Link to="/vermietung" className="btn-pill text-white">
+              <Link to="/vermietung" className="btn-pill w-4/5 justify-center text-white sm:w-auto sm:justify-start">
                 <span>Motorrad mieten</span> <ArrowRight className="size-4" />
               </Link>
             </div>

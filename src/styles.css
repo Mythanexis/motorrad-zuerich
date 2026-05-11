@@ -164,10 +164,7 @@
     transition: all 200ms ease;
   }
   .btn-pill:hover {
-    background-color: currentColor;
-  }
-  .btn-pill:hover > * {
-    color: var(--color-background);
+    background-color: rgba(255, 255, 255, 0.15);
   }
   .btn-pill-solid {
     display: inline-flex;
@@ -184,4 +181,74 @@
   .btn-pill-solid:hover {
     opacity: 0.85;
   }
+}
+
+/* ── Hero entrance animations ─────────────────────────────── */
+@keyframes hero-curtain-lift {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes hero-img-zoom {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes word-rise {
+  from {
+    transform: translateY(115%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #000;
+  transform-origin: top;
+  animation: hero-curtain-lift 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.2s both;
+  pointer-events: none;
+}
+
+.hero-img-zoom {
+  animation: hero-img-zoom 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
+.word-rise-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.word-rise {
+  display: inline-block;
+  animation: word-rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-fade-up {
+  animation: hero-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
