@@ -239,7 +239,7 @@ function CourseCard({
       params={{ slug }}
       className="course-card group relative flex-1 overflow-hidden rounded-2xl bg-surface text-surface-foreground transition-[flex-grow] duration-500 ease-out hover:flex-[1.2]"
     >
-      <div className="relative aspect-[4/3] w-full overflow-hidden md:aspect-[4/5]">
+      <div className="relative h-[480px] w-full overflow-hidden md:h-[680px]">
         <img
           src={img}
           alt={title}
@@ -268,8 +268,9 @@ function CourseCard({
           </div>
           <div className="flex items-end justify-between gap-6">
             <p className="max-w-xs text-sm text-white/85">{desc}</p>
-            <span className="inline-flex shrink-0 items-center gap-2 text-sm font-medium text-white">
-              {cta} <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+            <span className="relative inline-flex shrink-0 items-center gap-2 pb-1 text-sm font-medium text-white after:absolute after:bottom-0 after:left-0 after:h-[0.5px] after:w-full after:origin-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 group-hover:after:scale-x-100">
+              {cta}
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             </span>
           </div>
         </div>
