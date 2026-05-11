@@ -88,18 +88,20 @@ function Index() {
 
             <div className="course-row flex flex-col gap-6 md:flex-row">
               <CourseCard
+                slug="grundkurs"
                 img={grundkursImg}
                 tags={["Pflicht", "3 Tage"]}
                 title="Grundkurs"
-                desc="Sportliche Grundausbildung: 4 Räder, 1 Maschine, ein Fundament."
-                cta="Grundkurs entdecken"
+                desc="Sportliche Grundausbildung — Fundament fürs ganze Fahrerleben."
+                cta="Entdecken"
               />
               <CourseCard
+                slug="wab"
                 img={wabImg}
                 tags={["Weiterbildung", "2 Phasen"]}
                 title="WAB · 2-Phasen"
                 desc="Weiterführende Ausbildung für den definitiven Führerausweis."
-                cta="WAB entdecken"
+                cta="Entdecken"
               />
             </div>
           </div>
