@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 
+import { useSmoothScroll } from "../hooks/use-smooth-scroll";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
@@ -134,6 +135,8 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useSmoothScroll();
 
   return (
     <QueryClientProvider client={queryClient}>
