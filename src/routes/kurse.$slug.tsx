@@ -38,7 +38,8 @@ export const Route = createFileRoute("/kurse/$slug")({
 });
 
 function CourseDetail() {
-  const { course } = Route.useLoaderData();
+  const data = Route.useLoaderData();
+  const course: Course = data.course;
   const idx = courses.findIndex((c) => c.slug === course.slug);
   const next = courses[(idx + 1) % courses.length];
 
