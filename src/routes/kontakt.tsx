@@ -137,7 +137,7 @@ function KontaktPage() {
   );
 }
 
-function ContactTile({ icon, label, value, href }: { icon: React.ReactNode; label: string; value: string; href: string }) {
+function ContactTile({ icon, label, value, href }: { icon: ReactNode; label: string; value: string; href: string }) {
   return (
     <a
       href={href}
