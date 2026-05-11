@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import { useSmoothScroll } from "../hooks/use-smooth-scroll";
+import { ViewportIndicator } from "../components/ui/viewport-indicator";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
@@ -141,6 +142,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <ViewportIndicator />
     </QueryClientProvider>
   );
 }
