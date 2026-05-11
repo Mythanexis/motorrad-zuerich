@@ -171,22 +171,43 @@ function Index() {
   );
 }
 
-function CourseCard({ img, tag, title, desc }: { img: string; tag: string; title: string; desc: string }) {
+function CourseCard({ img, tags, title, desc, cta }: { img: string; tags: string[]; title: string; desc: string; cta: string }) {
   return (
-    <div className="group relative bg-background p-8 md:p-12">
-      <div className="aspect-[16/10] w-full overflow-hidden bg-muted">
-        <img src={img} alt={title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-      </div>
-      <div className="mt-8 flex items-center justify-between gap-4">
-        <div>
-          <div className="eyebrow opacity-60">{tag}</div>
-          <h3 className="display-md mt-3">{title}</h3>
+    <Link
+      to="/kurse"
+      className="course-card group relative flex-1 overflow-hidden rounded-3xl bg-surface text-surface-foreground transition-[flex-grow] duration-500 ease-out hover:flex-[1.25]"
+    >
+      <div className="relative aspect-[4/3] w-full overflow-hidden md:aspect-[5/6]">
+        <img
+          src={img}
+          alt={title}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
+
+        {/* Title top */}
+        <div className="absolute left-0 right-0 top-0 p-8 md:p-10">
+          <h3 className="display-lg text-white drop-shadow-md">{title}</h3>
         </div>
-        <Link to="/kurse" className="shrink-0 rounded-full border border-border-strong p-3 transition-colors hover:bg-foreground hover:text-background" aria-label={`${title} ansehen`}>
-          <ArrowRight className="size-4" />
-        </Link>
+
+        {/* Bottom: tags + desc + arrow */}
+        <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
+          <div className="mb-5 flex flex-wrap gap-2">
+            {tags.map((t) => (
+              <span key={t} className="rounded-full border border-white/40 bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
+                {t}
+              </span>
+            ))}
+          </div>
+          <div className="flex items-end justify-between gap-6">
+            <p className="max-w-sm text-sm text-white/85">{desc}</p>
+            <span className="inline-flex shrink-0 items-center gap-2 text-sm font-medium text-white">
+              {cta} <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+            </span>
+          </div>
+        </div>
       </div>
-      <p className="mt-6 max-w-md text-sm opacity-70">{desc}</p>
-    </div>
+    </Link>
   );
 }
