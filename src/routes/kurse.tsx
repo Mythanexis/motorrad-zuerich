@@ -128,7 +128,7 @@ function CourseTile({ course }: { course: Course }) {
           <div className="eyebrow opacity-60">{course.duration}</div>
           <div className="mt-1.5 text-base font-medium">{course.price}</div>
         </div>
-        <span className="inline-flex items-center gap-2 text-sm font-medium">
+        <span className="relative inline-flex items-center gap-2 pb-1 text-sm font-medium after:absolute after:bottom-0 after:left-0 after:h-[0.5px] after:w-full after:origin-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 group-hover:after:scale-x-100">
           Details <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
         </span>
       </div>
