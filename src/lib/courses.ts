@@ -3,6 +3,11 @@ import wabImg from "@/assets/wab-course.jpg";
 import theorieImg from "@/assets/course-theorie.jpg";
 import sicherheitImg from "@/assets/course-sicherheit.jpg";
 
+export type CourseDate = {
+  label: string;
+  spots: number;
+};
+
 export type Course = {
   slug: string;
   code: string;
@@ -22,6 +27,7 @@ export type Course = {
   modules: { title: string; desc: string }[];
   includes: string[];
   requirements: string[];
+  dates: CourseDate[];
 };
 
 export const courses: Course[] = [
@@ -61,6 +67,13 @@ export const courses: Course[] = [
     ],
     includes: ["Motorrad inkl. Benzin", "Helm & Handschuhe", "Versicherung", "Kursunterlagen"],
     requirements: ["Lernfahrausweis Kat. A", "Robuste Kleidung", "Festes Schuhwerk"],
+    dates: [
+      { label: "30. Mai – 1. Jun 2026", spots: 3 },
+      { label: "20.–22. Jun 2026", spots: 6 },
+      { label: "11.–13. Jul 2026", spots: 6 },
+      { label: "8.–10. Aug 2026", spots: 0 },
+      { label: "5.–7. Sep 2026", spots: 6 },
+    ],
   },
   {
     slug: "wab-2-phasen",
@@ -94,6 +107,12 @@ export const courses: Course[] = [
     ],
     includes: ["Mietmotorrad möglich", "Schutzausrüstung", "Versicherung", "Pausenverpflegung"],
     requirements: ["Probeführerausweis Kat. A", "Eigenes oder Mietmotorrad", "Schutzkleidung"],
+    dates: [
+      { label: "7. & 21. Jun 2026", spots: 4 },
+      { label: "5. & 19. Jul 2026", spots: 6 },
+      { label: "2. & 16. Aug 2026", spots: 2 },
+      { label: "6. & 20. Sep 2026", spots: 6 },
+    ],
   },
   {
     slug: "a1-leichtmotorrad",
@@ -125,6 +144,9 @@ export const courses: Course[] = [
     ],
     includes: ["Mietmotorrad 125er", "Theorie-Plattform", "Prüfungsvorbereitung"],
     requirements: ["16 Jahre alt", "Lernfahrausweis", "Sehtest"],
+    dates: [
+      { label: "Auf Anfrage", spots: -1 },
+    ],
   },
   {
     slug: "a35-mittelklasse",
@@ -156,6 +178,9 @@ export const courses: Course[] = [
     ],
     includes: ["Mietmotorrad A35", "Schutzausrüstung", "Theorie-Plattform"],
     requirements: ["18 Jahre alt", "Lernfahrausweis Kat. A", "Sehtest"],
+    dates: [
+      { label: "Auf Anfrage", spots: -1 },
+    ],
   },
   {
     slug: "a-unbeschraenkt",
@@ -187,6 +212,9 @@ export const courses: Course[] = [
     ],
     includes: ["Leistungsstarkes Mietmotorrad", "Individueller Pfad", "Prüfungsbegleitung"],
     requirements: ["25 Jahre (Direkt) oder 2 Jahre A35", "Lernfahrausweis", "Sehtest"],
+    dates: [
+      { label: "Auf Anfrage", spots: -1 },
+    ],
   },
   {
     slug: "theoriekurs",
@@ -224,6 +252,12 @@ export const courses: Course[] = [
     ],
     includes: ["12 Mt. Online-Zugang", "Lernunterlagen", "Prüfungssimulation"],
     requirements: ["Mindestens 15 Jahre alt"],
+    dates: [
+      { label: "2. & 9. Jun 2026", spots: 8 },
+      { label: "7. & 14. Jul 2026", spots: 10 },
+      { label: "4. & 11. Aug 2026", spots: 1 },
+      { label: "1. & 8. Sep 2026", spots: 10 },
+    ],
   },
 ];
 
