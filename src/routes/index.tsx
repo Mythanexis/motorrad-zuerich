@@ -70,7 +70,7 @@ function Index() {
           </div>
         </Section>
 
-        {/* COURSES */}
+        {/* COURSES — Porsche-style large cards */}
         <section className="bg-background">
           <div className="mx-auto max-w-[1600px] px-6 md:px-10">
             <div className="hairline" />
@@ -86,18 +86,20 @@ function Index() {
               </Link>
             </div>
 
-            <div className="grid gap-px bg-border md:grid-cols-2">
+            <div className="course-row flex flex-col gap-6 md:flex-row">
               <CourseCard
                 img={grundkursImg}
-                tag="Pflicht"
+                tags={["Pflicht", "3 Tage"]}
                 title="Grundkurs"
-                desc="Die obligatorische Motorrad-Ausbildung — drei Tage, zwölf Stunden, ein Fundament fürs ganze Fahrerleben."
+                desc="Sportliche Grundausbildung: 4 Räder, 1 Maschine, ein Fundament."
+                cta="Grundkurs entdecken"
               />
               <CourseCard
                 img={wabImg}
-                tag="Weiterbildung"
+                tags={["Weiterbildung", "2 Phasen"]}
                 title="WAB · 2-Phasen"
-                desc="Weiterführende Ausbildung für den definitiven Führerausweis. Sicher, präzise, geführt."
+                desc="Weiterführende Ausbildung für den definitiven Führerausweis."
+                cta="WAB entdecken"
               />
             </div>
           </div>
