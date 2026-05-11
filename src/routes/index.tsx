@@ -12,7 +12,11 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Motorradkurse Zürich — Grundkurse, WAB & Vermietung in Horgen" },
-      { name: "description", content: "Motorradausbildung in Zürich. Grundkurse, WAB-Kurse und Motorrad-Vermietung in Horgen. Präzision, Sicherheit und kompromisslose Qualität." },
+      {
+        name: "description",
+        content:
+          "Motorradausbildung in Zürich. Grundkurse, WAB-Kurse und Motorrad-Vermietung in Horgen. Präzision, Sicherheit und kompromisslose Qualität.",
+      },
       { property: "og:title", content: "Motorradkurse Zürich" },
       { property: "og:description", content: "Grundkurse, WAB-Kurse und Vermietung in Horgen." },
     ],
@@ -38,12 +42,13 @@ function Index() {
           <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 md:px-10 md:pb-28">
             <div className="eyebrow mb-6 opacity-80">Saison 2026 · Anmeldung offen</div>
             <h1 className="display-xl max-w-5xl">
-              Fahren lernen.<br />
+              Fahren lernen.
+              <br />
               <span className="opacity-70">Fahren beherrschen.</span>
             </h1>
             <p className="mt-8 max-w-md text-base opacity-80 md:text-lg">
-              Motorradkurse in Zürich — vom Grundkurs bis zur Weiterbildung.
-              Geführt von erfahrenen Instruktoren in Horgen.
+              Motorradkurse in Zürich — vom Grundkurs bis zur Weiterbildung. Geführt von erfahrenen
+              Instruktoren in Horgen.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
               <Link to="/kurse" className="btn-pill-solid bg-white text-black">
@@ -62,9 +67,8 @@ function Index() {
             <div className="eyebrow md:col-span-3 opacity-60">Philosophie</div>
             <div className="md:col-span-9">
               <p className="display-md max-w-4xl">
-                Wir glauben, dass jede sichere Fahrt mit Präzision beginnt.
-                Mit der richtigen Technik. Dem richtigen Instinkt. Und der
-                richtigen Schule.
+                Wir glauben, dass jede sichere Fahrt mit Präzision beginnt. Mit der richtigen
+                Technik. Dem richtigen Instinkt. Und der richtigen Schule.
               </p>
             </div>
           </div>
@@ -81,7 +85,10 @@ function Index() {
                 <div className="eyebrow opacity-60">01 — Ausbildung</div>
                 <h2 className="display-lg mt-4">Unsere Kurse.</h2>
               </div>
-              <Link to="/kurse" className="hidden text-sm font-medium opacity-70 hover:opacity-100 md:inline-flex md:items-center md:gap-2">
+              <Link
+                to="/kurse"
+                className="hidden text-sm font-medium opacity-70 hover:opacity-100 md:inline-flex md:items-center md:gap-2"
+              >
                 Alle Kurse <ArrowRight className="size-4" />
               </Link>
             </div>
@@ -111,14 +118,23 @@ function Index() {
         <section className="bg-surface text-surface-foreground">
           <div className="mx-auto grid max-w-[1600px] gap-0 md:grid-cols-2">
             <div className="relative aspect-[4/3] md:aspect-auto">
-              <img src={rentalImg} alt="Motorräder zur Vermietung" className="h-full w-full object-cover" loading="lazy" />
+              <img
+                src={rentalImg}
+                alt="Motorräder zur Vermietung"
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
             </div>
             <div className="flex flex-col justify-center px-6 py-20 md:px-16 md:py-32">
               <div className="eyebrow opacity-60">02 — Vermietung</div>
-              <h2 className="display-lg mt-4">Drei Maschinen.<br /><span className="opacity-60">Bereit, wenn Sie es sind.</span></h2>
+              <h2 className="display-lg mt-4">
+                Drei Maschinen.
+                <br />
+                <span className="opacity-60">Bereit, wenn Sie es sind.</span>
+              </h2>
               <p className="mt-8 max-w-md text-base opacity-80">
-                Eine sorgfältig kuratierte Auswahl an Motorrädern für Kursteilnehmer
-                und Privatfahrer. Tageweise, stundenweise, kompromisslos gewartet.
+                Eine sorgfältig kuratierte Auswahl an Motorrädern für Kursteilnehmer und
+                Privatfahrer. Tageweise, stundenweise, kompromisslos gewartet.
               </p>
               <div className="mt-10">
                 <Link to="/vermietung" className="btn-pill text-white">
@@ -153,7 +169,9 @@ function Index() {
               <div className="eyebrow md:col-span-3 opacity-60">Bereit?</div>
               <div className="md:col-span-9">
                 <h2 className="display-xl">
-                  Reservieren Sie<br />Ihren Platz.
+                  Reservieren Sie
+                  <br />
+                  Ihren Platz.
                 </h2>
                 <div className="mt-12 flex flex-wrap gap-3">
                   <Link to="/kontakt" className="btn-pill-solid bg-white text-black">
@@ -173,7 +191,21 @@ function Index() {
   );
 }
 
-function CourseCard({ slug, img, tags, title, desc, cta }: { slug: string; img: string; tags: string[]; title: string; desc: string; cta: string }) {
+function CourseCard({
+  slug,
+  img,
+  tags,
+  title,
+  desc,
+  cta,
+}: {
+  slug: string;
+  img: string;
+  tags: string[];
+  title: string;
+  desc: string;
+  cta: string;
+}) {
   return (
     <Link
       to="/kurse/$slug"
@@ -191,13 +223,18 @@ function CourseCard({ slug, img, tags, title, desc, cta }: { slug: string; img: 
 
         {/* Title top */}
         <div className="absolute left-0 right-0 top-0 p-6 md:p-8">
-          <h3 className="text-3xl font-medium leading-tight text-white drop-shadow md:text-4xl">{title}</h3>
+          <h3 className="text-3xl font-medium leading-tight text-white drop-shadow md:text-4xl">
+            {title}
+          </h3>
         </div>
 
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
           <div className="mb-4 flex flex-wrap gap-2">
             {tags.map((t) => (
-              <span key={t} className="rounded-full border border-white/40 bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md">
+              <span
+                key={t}
+                className="rounded-full border border-white/40 bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md"
+              >
                 {t}
               </span>
             ))}

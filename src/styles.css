@@ -112,7 +112,10 @@
     font-feature-settings: "ss01", "cv11";
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
     font-weight: 500;
@@ -178,5 +181,7 @@
     font-weight: 500;
     transition: opacity 200ms ease;
   }
-  .btn-pill-solid:hover { opacity: 0.85; }
+  .btn-pill-solid:hover {
+    opacity: 0.85;
+  }
 }

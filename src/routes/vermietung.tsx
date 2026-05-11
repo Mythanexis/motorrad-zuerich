@@ -11,9 +11,16 @@ export const Route = createFileRoute("/vermietung")({
   head: () => ({
     meta: [
       { title: "Vermietung — Motorradkurse Zürich" },
-      { name: "description", content: "Motorrad mieten in Horgen. Drei sorgfältig gewartete Maschinen — tageweise oder stundenweise." },
+      {
+        name: "description",
+        content:
+          "Motorrad mieten in Horgen. Drei sorgfältig gewartete Maschinen — tageweise oder stundenweise.",
+      },
       { property: "og:title", content: "Motorrad-Vermietung Zürich" },
-      { property: "og:description", content: "Drei Maschinen, kompromisslos gewartet. Mietbar in Horgen." },
+      {
+        property: "og:description",
+        content: "Drei Maschinen, kompromisslos gewartet. Mietbar in Horgen.",
+      },
     ],
   }),
   component: VermietungPage,
@@ -73,11 +80,19 @@ function VermietungPage() {
       <Header />
       <main className="pt-16">
         <section className="relative h-[70vh] min-h-[480px] overflow-hidden bg-surface text-surface-foreground">
-          <img src={rentalImg} alt="" className="absolute inset-0 h-full w-full object-cover opacity-70" />
+          <img
+            src={rentalImg}
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover opacity-70"
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
           <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-16 md:px-10 md:pb-24">
             <div className="eyebrow opacity-80">Vermietung</div>
-            <h1 className="display-xl mt-6 max-w-4xl">Drei Motorräder.<br /><span className="opacity-70">Eine Wahl.</span></h1>
+            <h1 className="display-xl mt-6 max-w-4xl">
+              Drei Motorräder.
+              <br />
+              <span className="opacity-70">Eine Wahl.</span>
+            </h1>
           </div>
         </section>
 
@@ -149,8 +164,14 @@ function VermietungPage() {
           <div className="mx-auto max-w-[1600px] grid gap-12 border-t border-border px-6 py-24 md:grid-cols-3 md:px-10 md:py-32">
             {[
               { t: "Inklusive", d: "Helm, Handschuhe, Versicherung mit CHF 2’000 SB." },
-              { t: "Voraussetzung", d: "Gültiger Führerausweis der entsprechenden Kategorie. Mindestalter 25." },
-              { t: "Übergabe", d: "Persönliche Einweisung am Standort Horgen. Volltank bei Rückgabe." },
+              {
+                t: "Voraussetzung",
+                d: "Gültiger Führerausweis der entsprechenden Kategorie. Mindestalter 25.",
+              },
+              {
+                t: "Übergabe",
+                d: "Persönliche Einweisung am Standort Horgen. Volltank bei Rückgabe.",
+              },
             ].map((x) => (
               <div key={x.t} className="border-t border-border-strong pt-6">
                 <div className="eyebrow opacity-60">{x.t}</div>

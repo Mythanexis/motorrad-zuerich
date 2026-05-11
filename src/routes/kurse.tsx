@@ -8,7 +8,11 @@ export const Route = createFileRoute("/kurse")({
   head: () => ({
     meta: [
       { title: "Kurse — Motorradkurse Zürich" },
-      { name: "description", content: "Grundkurse, WAB-Kurse, A1, A35, A unbeschränkt und Theorie. Komplette Motorrad-Ausbildung in Horgen." },
+      {
+        name: "description",
+        content:
+          "Grundkurse, WAB-Kurse, A1, A35, A unbeschränkt und Theorie. Komplette Motorrad-Ausbildung in Horgen.",
+      },
       { property: "og:title", content: "Motorradkurse — MK Zürich" },
       { property: "og:description", content: "Alle Kurse für Ihre Motorrad-Ausbildung." },
     ],
@@ -27,22 +31,30 @@ function KursePage() {
             <div className="grid gap-10 md:grid-cols-12 md:items-end">
               <div className="md:col-span-8">
                 <div className="eyebrow opacity-60">Ausbildung · 6 Kurse</div>
-                <h1 className="display-xl mt-6">Alle Kurse.<br /><span className="opacity-60">Eine Schule.</span></h1>
+                <h1 className="display-xl mt-6">
+                  Alle Kurse.
+                  <br />
+                  <span className="opacity-60">Eine Schule.</span>
+                </h1>
               </div>
               <p className="max-w-md text-base opacity-70 md:col-span-4 md:text-lg">
-                Vom ersten Aufsitzen bis zur unbeschränkten Kategorie A —
-                wir begleiten Sie durch jede Phase Ihrer Ausbildung.
+                Vom ersten Aufsitzen bis zur unbeschränkten Kategorie A — wir begleiten Sie durch
+                jede Phase Ihrer Ausbildung.
               </p>
             </div>
           </div>
-          <div className="mx-auto max-w-[1600px] px-6 md:px-10"><div className="hairline" /></div>
+          <div className="mx-auto max-w-[1600px] px-6 md:px-10">
+            <div className="hairline" />
+          </div>
         </section>
 
         {/* GRID */}
         <section className="bg-background">
           <div className="mx-auto max-w-[1600px] px-6 py-16 md:px-10 md:py-24">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {courses.map((c) => <CourseTile key={c.slug} course={c} />)}
+              {courses.map((c) => (
+                <CourseTile key={c.slug} course={c} />
+              ))}
             </div>
           </div>
         </section>
@@ -53,10 +65,14 @@ function KursePage() {
             <div className="grid gap-12 md:grid-cols-12">
               <div className="eyebrow opacity-60 md:col-span-3">Unsicher?</div>
               <div className="md:col-span-9">
-                <h2 className="display-lg">Wir beraten Sie<br /><span className="opacity-60">— ehrlich und persönlich.</span></h2>
+                <h2 className="display-lg">
+                  Wir beraten Sie
+                  <br />
+                  <span className="opacity-60">— ehrlich und persönlich.</span>
+                </h2>
                 <p className="mt-8 max-w-xl text-base opacity-80">
-                  Sie wissen nicht, welcher Kurs zu Ihnen passt? Schreiben Sie uns —
-                  wir empfehlen den richtigen Pfad für Ihre Situation.
+                  Sie wissen nicht, welcher Kurs zu Ihnen passt? Schreiben Sie uns — wir empfehlen
+                  den richtigen Pfad für Ihre Situation.
                 </p>
                 <div className="mt-10">
                   <Link to="/kontakt" className="btn-pill text-white">
@@ -90,14 +106,21 @@ function CourseTile({ course }: { course: Course }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30" />
         <div className="absolute left-5 top-5 flex flex-wrap gap-2">
           {course.tags.map((t) => (
-            <span key={t} className="rounded-full border border-white/40 bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md">
+            <span
+              key={t}
+              className="rounded-full border border-white/40 bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md"
+            >
               {t}
             </span>
           ))}
         </div>
         <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
-          <h3 className="text-2xl font-medium leading-tight text-white drop-shadow md:text-3xl">{course.title}</h3>
-          <span className="text-xs font-medium uppercase tracking-widest text-white/70">{course.code}</span>
+          <h3 className="text-2xl font-medium leading-tight text-white drop-shadow md:text-3xl">
+            {course.title}
+          </h3>
+          <span className="text-xs font-medium uppercase tracking-widest text-white/70">
+            {course.code}
+          </span>
         </div>
       </div>
       <div className="flex items-center justify-between gap-4 p-6">

@@ -14,7 +14,12 @@ export function Section({
   dark?: boolean;
 }) {
   return (
-    <section className={[dark ? "bg-surface text-surface-foreground" : "bg-background text-foreground", className].join(" ")}>
+    <section
+      className={[
+        dark ? "bg-surface text-surface-foreground" : "bg-background text-foreground",
+        className,
+      ].join(" ")}
+    >
       <div className="mx-auto max-w-[1600px] px-6 py-24 md:px-10 md:py-32">
         {(eyebrow || title) && (
           <div className="mb-16 grid gap-6 md:grid-cols-12">
