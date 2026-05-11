@@ -10,12 +10,11 @@ function getBreakpoint(w: number) {
 }
 
 export function ViewportIndicator() {
-  if (import.meta.env.PROD) return null;
-
   const [bp, setBp] = useState("");
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    if (import.meta.env.PROD) return;
     let timeout: ReturnType<typeof setTimeout>;
 
     function onResize() {
@@ -31,6 +30,8 @@ export function ViewportIndicator() {
       clearTimeout(timeout);
     };
   }, []);
+
+  if (import.meta.env.PROD) return null;
 
   return (
     <div

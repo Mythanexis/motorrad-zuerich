@@ -17,6 +17,7 @@ export type Course = {
   price: string;
   category: string;
   minAge: string;
+  location: string;
   img: string;
   modules: { title: string; desc: string }[];
   includes: string[];
@@ -26,6 +27,7 @@ export type Course = {
 export const courses: Course[] = [
   {
     slug: "grundkurs",
+    location: "Horgen, Zürichsee",
     code: "01",
     tag: "Pflicht",
     tags: ["Pflicht", "3 Tage"],
@@ -61,7 +63,8 @@ export const courses: Course[] = [
     requirements: ["Lernfahrausweis Kat. A", "Robuste Kleidung", "Festes Schuhwerk"],
   },
   {
-    slug: "wab",
+    slug: "wab-2-phasen",
+    location: "Horgen, Zürichsee",
     code: "02",
     tag: "Weiterbildung",
     tags: ["Weiterbildung", "2 Phasen"],
@@ -93,7 +96,8 @@ export const courses: Course[] = [
     requirements: ["Probeführerausweis Kat. A", "Eigenes oder Mietmotorrad", "Schutzkleidung"],
   },
   {
-    slug: "a1",
+    slug: "a1-leichtmotorrad",
+    location: "Horgen, Zürichsee",
     code: "03",
     tag: "Kategorie",
     tags: ["Kategorie A1", "ab 16 J."],
@@ -123,7 +127,8 @@ export const courses: Course[] = [
     requirements: ["16 Jahre alt", "Lernfahrausweis", "Sehtest"],
   },
   {
-    slug: "a35",
+    slug: "a35-mittelklasse",
+    location: "Horgen, Zürichsee",
     code: "04",
     tag: "Kategorie",
     tags: ["Kategorie A35", "ab 18 J."],
@@ -154,6 +159,7 @@ export const courses: Course[] = [
   },
   {
     slug: "a-unbeschraenkt",
+    location: "Horgen, Zürichsee",
     code: "05",
     tag: "Kategorie",
     tags: ["Kategorie A", "Unbeschränkt"],
@@ -183,7 +189,8 @@ export const courses: Course[] = [
     requirements: ["25 Jahre (Direkt) oder 2 Jahre A35", "Lernfahrausweis", "Sehtest"],
   },
   {
-    slug: "theorie",
+    slug: "theoriekurs",
+    location: "Horgen, Zürichsee",
     code: "06",
     tag: "Theorie",
     tags: ["Theorie", "Online + Präsenz"],

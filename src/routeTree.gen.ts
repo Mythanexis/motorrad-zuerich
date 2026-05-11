@@ -14,6 +14,7 @@ import { Route as StandorteRouteImport } from './routes/standorte'
 import { Route as KurseRouteImport } from './routes/kurse'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as KurseIndexRouteImport } from './routes/kurse.index'
 import { Route as KurseSlugRouteImport } from './routes/kurse.$slug'
 
 const VermietungRoute = VermietungRouteImport.update({
@@ -41,6 +42,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KurseIndexRoute = KurseIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => KurseRoute,
+} as any)
 const KurseSlugRoute = KurseSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -54,14 +60,15 @@ export interface FileRoutesByFullPath {
   '/standorte': typeof StandorteRoute
   '/vermietung': typeof VermietungRoute
   '/kurse/$slug': typeof KurseSlugRoute
+  '/kurse/': typeof KurseIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/kontakt': typeof KontaktRoute
-  '/kurse': typeof KurseRouteWithChildren
   '/standorte': typeof StandorteRoute
   '/vermietung': typeof VermietungRoute
   '/kurse/$slug': typeof KurseSlugRoute
+  '/kurse': typeof KurseIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +78,7 @@ export interface FileRoutesById {
   '/standorte': typeof StandorteRoute
   '/vermietung': typeof VermietungRoute
   '/kurse/$slug': typeof KurseSlugRoute
+  '/kurse/': typeof KurseIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,14 +89,15 @@ export interface FileRouteTypes {
     | '/standorte'
     | '/vermietung'
     | '/kurse/$slug'
+    | '/kurse/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/kontakt'
-    | '/kurse'
     | '/standorte'
     | '/vermietung'
     | '/kurse/$slug'
+    | '/kurse'
   id:
     | '__root__'
     | '/'
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/standorte'
     | '/vermietung'
     | '/kurse/$slug'
+    | '/kurse/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -144,6 +154,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/kurse/': {
+      id: '/kurse/'
+      path: '/'
+      fullPath: '/kurse/'
+      preLoaderRoute: typeof KurseIndexRouteImport
+      parentRoute: typeof KurseRoute
+    }
     '/kurse/$slug': {
       id: '/kurse/$slug'
       path: '/$slug'
@@ -156,10 +173,12 @@ declare module '@tanstack/react-router' {
 
 interface KurseRouteChildren {
   KurseSlugRoute: typeof KurseSlugRoute
+  KurseIndexRoute: typeof KurseIndexRoute
 }
 
 const KurseRouteChildren: KurseRouteChildren = {
   KurseSlugRoute: KurseSlugRoute,
+  KurseIndexRoute: KurseIndexRoute,
 }
 
 const KurseRouteWithChildren = KurseRoute._addFileChildren(KurseRouteChildren)

@@ -3,9 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Section } from "@/components/site/Section";
+import { courses } from "@/lib/courses";
 import heroBike from "@/assets/hero-kurs.webp";
-import grundkursImg from "@/assets/course-grundkurs.jpg";
-import wabImg from "@/assets/wab-course.jpg";
 import rentalImg from "@/assets/rental-bikes.jpg";
 
 function W({ children, delay }: { children: React.ReactNode; delay: number }) {
@@ -78,10 +77,16 @@ function Index() {
               className="hero-fade-up mt-10 flex w-full flex-col items-center gap-3 sm:flex-row sm:justify-center md:w-auto md:justify-start"
               style={{ animationDelay: "1500ms" }}
             >
-              <Link to="/kurse" className="btn-pill-solid w-4/5 justify-center bg-white text-black sm:w-auto sm:justify-start">
+              <Link
+                to="/kurse"
+                className="btn-pill-solid w-4/5 justify-center bg-white text-black sm:w-auto sm:justify-start"
+              >
                 Kurse entdecken <ArrowRight className="size-4" />
               </Link>
-              <Link to="/vermietung" className="btn-pill w-4/5 justify-center text-white sm:w-auto sm:justify-start">
+              <Link
+                to="/vermietung"
+                className="btn-pill w-4/5 justify-center text-white sm:w-auto sm:justify-start"
+              >
                 <span>Motorrad mieten</span> <ArrowRight className="size-4" />
               </Link>
             </div>
@@ -121,22 +126,17 @@ function Index() {
             </div>
 
             <div className="course-row flex flex-col gap-6 md:flex-row">
-              <CourseCard
-                slug="grundkurs"
-                img={grundkursImg}
-                tags={["Pflicht", "3 Tage"]}
-                title="Grundkurs"
-                desc="Sportliche Grundausbildung — Fundament fürs ganze Fahrerleben."
-                cta="Entdecken"
-              />
-              <CourseCard
-                slug="wab"
-                img={wabImg}
-                tags={["Weiterbildung", "2 Phasen"]}
-                title="WAB · 2-Phasen"
-                desc="Weiterführende Ausbildung für den definitiven Führerausweis."
-                cta="Entdecken"
-              />
+              {courses.slice(0, 2).map((c) => (
+                <CourseCard
+                  key={c.slug}
+                  slug={c.slug}
+                  img={c.img}
+                  tags={c.tags}
+                  title={c.title}
+                  desc={c.description}
+                  cta="Entdecken"
+                />
+              ))}
             </div>
           </div>
         </section>

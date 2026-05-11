@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, ChevronRight } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { courses, getCourse, type Course } from "@/lib/courses";
@@ -50,49 +50,50 @@ function CourseDetail() {
       <Header variant="overlay" />
       <main>
         {/* HERO */}
-        <section className="relative h-[90vh] min-h-[600px] overflow-hidden bg-surface text-surface-foreground">
+        <section className="relative h-svh overflow-hidden bg-surface text-surface-foreground">
           <img
             src={course.img}
             alt={course.title}
             className="absolute inset-0 h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/40" />
-          <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 md:px-10 md:pb-28">
-            <Link
-              to="/kurse"
-              className="mb-8 inline-flex items-center gap-2 text-sm opacity-80 hover:opacity-100"
-            >
-              <ArrowLeft className="size-4" /> Alle Kurse
-            </Link>
-            <div className="flex flex-wrap gap-2">
-              {course.tags.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-full border border-white/40 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur-md"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-            <h1 className="display-xl mt-6 max-w-4xl">{course.title}</h1>
-            <p className="mt-6 max-w-xl text-base opacity-85 md:text-lg">{course.tagline}</p>
-          </div>
-        </section>
-
-        {/* KEY FACTS strip */}
-        <section className="bg-foreground text-background">
-          <div className="mx-auto grid max-w-[1600px] gap-px bg-white/15 px-0 md:grid-cols-4">
-            {[
-              { l: "Dauer", v: course.duration },
-              { l: "Ab", v: course.price },
-              { l: "Kategorie", v: course.category },
-              { l: "Mindestalter", v: course.minAge },
-            ].map((f) => (
-              <div key={f.l} className="bg-foreground p-8 md:p-10">
-                <div className="eyebrow opacity-60">{f.l}</div>
-                <div className="mt-3 text-xl font-medium md:text-2xl">{f.v}</div>
+          <div className="relative z-10 flex h-full flex-col">
+            <div className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col justify-end px-6 pb-10 md:px-10 md:pb-14">
+              <nav aria-label="breadcrumb" className="mb-8">
+                <ol className="flex items-center gap-1.5 text-sm text-white/70">
+                  <li><Link to="/" className="hover:text-white">Startseite</Link></li>
+                  <li><ChevronRight className="size-3.5" /></li>
+                  <li><Link to="/kurse" className="hover:text-white">Kurse</Link></li>
+                  <li><ChevronRight className="size-3.5" /></li>
+                  <li className="text-white">{course.title}</li>
+                </ol>
+              </nav>
+              <div className="flex flex-wrap gap-2">
+                {course.tags.map((t) => (
+                  <span key={t} className="rounded-full border border-white/40 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur-md">
+                    {t}
+                  </span>
+                ))}
               </div>
-            ))}
+              <h1 className="display-xl mt-6 max-w-4xl">{course.title}</h1>
+              <p className="mt-6 max-w-xl text-base opacity-85 md:text-lg">{course.tagline}</p>
+            </div>
+            {/* KEY FACTS strip — anchored to bottom of hero */}
+            <div className="bg-foreground text-background">
+              <div className="mx-auto grid max-w-[1600px] gap-px bg-white/15 px-0 grid-cols-2 md:grid-cols-4">
+                {[
+                  { l: "Dauer", v: course.duration },
+                  { l: "Ab", v: course.price },
+                  { l: "Ort", v: course.location },
+                  { l: "Mindestalter", v: course.minAge },
+                ].map((f) => (
+                  <div key={f.l} className="bg-foreground p-8 md:p-10">
+                    <div className="eyebrow opacity-60">{f.l}</div>
+                    <div className="mt-3 text-xl font-medium md:text-2xl">{f.v}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
