@@ -173,13 +173,14 @@ function Index() {
   );
 }
 
-function CourseCard({ img, tags, title, desc, cta }: { img: string; tags: string[]; title: string; desc: string; cta: string }) {
+function CourseCard({ slug, img, tags, title, desc, cta }: { slug: string; img: string; tags: string[]; title: string; desc: string; cta: string }) {
   return (
     <Link
-      to="/kurse"
-      className="course-card group relative flex-1 overflow-hidden rounded-3xl bg-surface text-surface-foreground transition-[flex-grow] duration-500 ease-out hover:flex-[1.25]"
+      to="/kurse/$slug"
+      params={{ slug }}
+      className="course-card group relative flex-1 overflow-hidden rounded-2xl bg-surface text-surface-foreground transition-[flex-grow] duration-500 ease-out hover:flex-[1.2]"
     >
-      <div className="relative aspect-[4/3] w-full overflow-hidden md:aspect-[5/6]">
+      <div className="relative aspect-[4/3] w-full overflow-hidden md:aspect-[4/5]">
         <img
           src={img}
           alt={title}
