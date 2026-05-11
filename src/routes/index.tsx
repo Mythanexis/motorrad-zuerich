@@ -190,21 +190,20 @@ function CourseCard({ slug, img, tags, title, desc, cta }: { slug: string; img: 
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
 
         {/* Title top */}
-        <div className="absolute left-0 right-0 top-0 p-8 md:p-10">
-          <h3 className="display-lg text-white drop-shadow-md">{title}</h3>
+        <div className="absolute left-0 right-0 top-0 p-6 md:p-8">
+          <h3 className="text-3xl font-medium leading-tight text-white drop-shadow md:text-4xl">{title}</h3>
         </div>
 
-        {/* Bottom: tags + desc + arrow */}
-        <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
-          <div className="mb-5 flex flex-wrap gap-2">
+        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+          <div className="mb-4 flex flex-wrap gap-2">
             {tags.map((t) => (
-              <span key={t} className="rounded-full border border-white/40 bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
+              <span key={t} className="rounded-full border border-white/40 bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md">
                 {t}
               </span>
             ))}
           </div>
           <div className="flex items-end justify-between gap-6">
-            <p className="max-w-sm text-sm text-white/85">{desc}</p>
+            <p className="max-w-xs text-sm text-white/85">{desc}</p>
             <span className="inline-flex shrink-0 items-center gap-2 text-sm font-medium text-white">
               {cta} <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             </span>
