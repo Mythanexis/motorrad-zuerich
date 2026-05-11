@@ -32,14 +32,9 @@ export function Header({ variant = "light" }: { variant?: "light" | "overlay" })
       ].join(" ")}
     >
       <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-6 md:px-10">
-        <button
-          className="flex items-center gap-2 text-sm font-medium md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Menü"
-        >
-          {open ? <X className="size-4" /> : <Menu className="size-4" />}
-          <span>Menü</span>
-        </button>
+        <Link to="/" className="text-base font-semibold tracking-[0.18em]">
+          MK<span className="opacity-60">·</span>ZÜRICH
+        </Link>
 
         <nav className="hidden gap-8 md:flex">
           {nav.map((n) => (
@@ -52,15 +47,19 @@ export function Header({ variant = "light" }: { variant?: "light" | "overlay" })
               {n.label}
             </Link>
           ))}
+          <Link to="/kontakt" className="text-sm font-medium opacity-80 hover:opacity-100">
+            Buchen
+          </Link>
         </nav>
 
-        <Link to="/" className="absolute left-1/2 -translate-x-1/2 text-base font-semibold tracking-[0.18em]">
-          MK<span className="opacity-60">·</span>ZÜRICH
-        </Link>
-
-        <Link to="/kontakt" className="text-sm font-medium opacity-80 hover:opacity-100">
-          Buchen
-        </Link>
+        <button
+          className="flex items-center gap-2 text-sm font-medium md:hidden"
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Menü"
+        >
+          {open ? <X className="size-4" /> : <Menu className="size-4" />}
+          <span>Menü</span>
+        </button>
       </div>
 
       {open && (
