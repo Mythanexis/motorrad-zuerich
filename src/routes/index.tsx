@@ -88,18 +88,20 @@ function Index() {
 
             <div className="course-row flex flex-col gap-6 md:flex-row">
               <CourseCard
+                slug="grundkurs"
                 img={grundkursImg}
                 tags={["Pflicht", "3 Tage"]}
                 title="Grundkurs"
-                desc="Sportliche Grundausbildung: 4 Räder, 1 Maschine, ein Fundament."
-                cta="Grundkurs entdecken"
+                desc="Sportliche Grundausbildung — Fundament fürs ganze Fahrerleben."
+                cta="Entdecken"
               />
               <CourseCard
+                slug="wab"
                 img={wabImg}
                 tags={["Weiterbildung", "2 Phasen"]}
                 title="WAB · 2-Phasen"
                 desc="Weiterführende Ausbildung für den definitiven Führerausweis."
-                cta="WAB entdecken"
+                cta="Entdecken"
               />
             </div>
           </div>
@@ -171,13 +173,14 @@ function Index() {
   );
 }
 
-function CourseCard({ img, tags, title, desc, cta }: { img: string; tags: string[]; title: string; desc: string; cta: string }) {
+function CourseCard({ slug, img, tags, title, desc, cta }: { slug: string; img: string; tags: string[]; title: string; desc: string; cta: string }) {
   return (
     <Link
-      to="/kurse"
-      className="course-card group relative flex-1 overflow-hidden rounded-3xl bg-surface text-surface-foreground transition-[flex-grow] duration-500 ease-out hover:flex-[1.25]"
+      to="/kurse/$slug"
+      params={{ slug }}
+      className="course-card group relative flex-1 overflow-hidden rounded-2xl bg-surface text-surface-foreground transition-[flex-grow] duration-500 ease-out hover:flex-[1.2]"
     >
-      <div className="relative aspect-[4/3] w-full overflow-hidden md:aspect-[5/6]">
+      <div className="relative aspect-[4/3] w-full overflow-hidden md:aspect-[4/5]">
         <img
           src={img}
           alt={title}
@@ -187,21 +190,20 @@ function CourseCard({ img, tags, title, desc, cta }: { img: string; tags: string
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
 
         {/* Title top */}
-        <div className="absolute left-0 right-0 top-0 p-8 md:p-10">
-          <h3 className="display-lg text-white drop-shadow-md">{title}</h3>
+        <div className="absolute left-0 right-0 top-0 p-6 md:p-8">
+          <h3 className="text-3xl font-medium leading-tight text-white drop-shadow md:text-4xl">{title}</h3>
         </div>
 
-        {/* Bottom: tags + desc + arrow */}
-        <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
-          <div className="mb-5 flex flex-wrap gap-2">
+        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+          <div className="mb-4 flex flex-wrap gap-2">
             {tags.map((t) => (
-              <span key={t} className="rounded-full border border-white/40 bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
+              <span key={t} className="rounded-full border border-white/40 bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md">
                 {t}
               </span>
             ))}
           </div>
           <div className="flex items-end justify-between gap-6">
-            <p className="max-w-sm text-sm text-white/85">{desc}</p>
+            <p className="max-w-xs text-sm text-white/85">{desc}</p>
             <span className="inline-flex shrink-0 items-center gap-2 text-sm font-medium text-white">
               {cta} <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             </span>

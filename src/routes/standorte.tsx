@@ -118,21 +118,37 @@ function StandortePage() {
         {/* PARTNER CTA */}
         <section className="bg-background">
           <div className="mx-auto max-w-[1600px] px-6 py-24 md:px-10 md:py-32">
-            <div className="grid gap-12 md:grid-cols-12">
-              <div className="eyebrow opacity-60 md:col-span-3">Für Fahrschulen</div>
-              <div className="md:col-span-9">
-                <h2 className="display-xl">Werden Sie<br />Partner.</h2>
-                <p className="mt-10 max-w-xl text-base opacity-80 md:text-lg">
+            <div className="grid gap-16 md:grid-cols-12 md:items-end">
+              <div className="md:col-span-7">
+                <div className="eyebrow opacity-60">Für Fahrschulen</div>
+                <h2 className="display-xl mt-6">Werden Sie<br />Partner.</h2>
+              </div>
+              <div className="md:col-span-5">
+                <p className="text-base opacity-80 md:text-lg">
                   Sie betreiben eine Fahrschule und möchten unsere Kursinfrastruktur
                   und unser Buchungssystem nutzen? Wir öffnen unser Netzwerk Schritt
                   für Schritt — sprechen Sie mit uns.
                 </p>
-                <div className="mt-12">
+                <div className="mt-10">
                   <Link to="/kontakt" className="btn-pill-solid bg-foreground text-background">
                     Partner werden <ArrowRight className="size-4" />
                   </Link>
                 </div>
               </div>
+            </div>
+
+            <div className="mt-20 grid gap-px border-t border-border bg-border md:grid-cols-3">
+              {[
+                { n: "01", t: "Buchungssystem", d: "Volle Nutzung unserer Online-Plattform und CRM." },
+                { n: "02", t: "Mietflotte", d: "Zugriff auf gewartete Maschinen für Ihre Kursteilnehmer." },
+                { n: "03", t: "Marke & Marketing", d: "Auftritt unter dem Dach von Motorradkurse Zürich." },
+              ].map((b) => (
+                <div key={b.n} className="bg-background p-8 md:p-10">
+                  <div className="text-sm opacity-40">{b.n}</div>
+                  <div className="display-md mt-6">{b.t}</div>
+                  <p className="mt-4 text-sm opacity-70">{b.d}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
