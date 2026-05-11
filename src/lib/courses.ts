@@ -144,9 +144,7 @@ export const courses: Course[] = [
     ],
     includes: ["Mietmotorrad 125er", "Theorie-Plattform", "Prüfungsvorbereitung"],
     requirements: ["16 Jahre alt", "Lernfahrausweis", "Sehtest"],
-    dates: [
-      { label: "Auf Anfrage", spots: -1 },
-    ],
+    dates: [{ label: "Auf Anfrage", spots: -1 }],
   },
   {
     slug: "a35-mittelklasse",
@@ -178,9 +176,7 @@ export const courses: Course[] = [
     ],
     includes: ["Mietmotorrad A35", "Schutzausrüstung", "Theorie-Plattform"],
     requirements: ["18 Jahre alt", "Lernfahrausweis Kat. A", "Sehtest"],
-    dates: [
-      { label: "Auf Anfrage", spots: -1 },
-    ],
+    dates: [{ label: "Auf Anfrage", spots: -1 }],
   },
   {
     slug: "a-unbeschraenkt",
@@ -212,9 +208,7 @@ export const courses: Course[] = [
     ],
     includes: ["Leistungsstarkes Mietmotorrad", "Individueller Pfad", "Prüfungsbegleitung"],
     requirements: ["25 Jahre (Direkt) oder 2 Jahre A35", "Lernfahrausweis", "Sehtest"],
-    dates: [
-      { label: "Auf Anfrage", spots: -1 },
-    ],
+    dates: [{ label: "Auf Anfrage", spots: -1 }],
   },
   {
     slug: "theoriekurs",

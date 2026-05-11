@@ -43,13 +43,15 @@ function TitleWords({ text, baseDelay }: { text: string; baseDelay: number }) {
   const words = text.split(" ");
   return (
     <>
-      {words.map((word, i) => (
-        <span key={i} className="word-rise-wrap">
-          <span className="word-rise" style={{ animationDelay: `${baseDelay + i * 80}ms` }}>
-            {word}
+      {words
+        .map((word, i) => (
+          <span key={i} className="word-rise-wrap">
+            <span className="word-rise" style={{ animationDelay: `${baseDelay + i * 80}ms` }}>
+              {word}
+            </span>
           </span>
-        </span>
-      )).reduce<React.ReactNode[]>((acc, el, i) => (i === 0 ? [el] : [...acc, " ", el]), [])}
+        ))
+        .reduce<React.ReactNode[]>((acc, el, i) => (i === 0 ? [el] : [...acc, " ", el]), [])}
     </>
   );
 }
@@ -84,10 +86,22 @@ function CourseDetail() {
                 style={{ animationDelay: "1250ms" }}
               >
                 <ol className="flex items-center gap-1.5 text-sm text-white/70">
-                  <li><Link to="/" className="hover:text-white">Startseite</Link></li>
-                  <li><ChevronRight className="size-3.5" /></li>
-                  <li><Link to="/kurse" className="hover:text-white">Kurse</Link></li>
-                  <li><ChevronRight className="size-3.5" /></li>
+                  <li>
+                    <Link to="/" className="hover:text-white">
+                      Startseite
+                    </Link>
+                  </li>
+                  <li>
+                    <ChevronRight className="size-3.5" />
+                  </li>
+                  <li>
+                    <Link to="/kurse" className="hover:text-white">
+                      Kurse
+                    </Link>
+                  </li>
+                  <li>
+                    <ChevronRight className="size-3.5" />
+                  </li>
                   <li className="text-white">{course.title}</li>
                 </ol>
               </nav>
@@ -96,7 +110,10 @@ function CourseDetail() {
                 style={{ animationDelay: "1380ms" }}
               >
                 {course.tags.map((t) => (
-                  <span key={t} className="rounded-full border border-white/40 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur-md">
+                  <span
+                    key={t}
+                    className="rounded-full border border-white/40 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur-md"
+                  >
                     {t}
                   </span>
                 ))}
@@ -198,8 +215,14 @@ function CourseDetail() {
                           className="grid items-center gap-6 border-b border-white/10 py-6 md:grid-cols-12"
                         >
                           <span className="text-lg font-medium md:col-span-6">{d.label}</span>
-                          <span className={`text-sm md:col-span-3 ${full ? "opacity-30" : few ? "opacity-100" : "opacity-60"}`}>
-                            {full ? "Ausgebucht" : few ? `Noch ${d.spots} Plätze` : `${d.spots} Plätze frei`}
+                          <span
+                            className={`text-sm md:col-span-3 ${full ? "opacity-30" : few ? "opacity-100" : "opacity-60"}`}
+                          >
+                            {full
+                              ? "Ausgebucht"
+                              : few
+                                ? `Noch ${d.spots} Plätze`
+                                : `${d.spots} Plätze frei`}
                           </span>
                           <div className="md:col-span-3 md:text-right">
                             {full ? (
@@ -265,9 +288,7 @@ function CourseDetail() {
               <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
                 <div>
                   <div className="eyebrow opacity-40">Anmeldung</div>
-                  <h2 className="display-xl mt-4">
-                    Bereit für {course.shortTitle}?
-                  </h2>
+                  <h2 className="display-xl mt-4">Bereit für {course.shortTitle}?</h2>
                 </div>
                 <div className="flex shrink-0 flex-wrap gap-3">
                   <Link to="/kontakt" className="btn-pill-solid bg-background text-foreground">
