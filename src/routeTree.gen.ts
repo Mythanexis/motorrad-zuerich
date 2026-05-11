@@ -14,6 +14,7 @@ import { Route as StandorteRouteImport } from './routes/standorte'
 import { Route as KurseRouteImport } from './routes/kurse'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as KurseSlugRouteImport } from './routes/kurse.$slug'
 
 const VermietungRoute = VermietungRouteImport.update({
   id: '/vermietung',
@@ -40,41 +41,68 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KurseSlugRoute = KurseSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => KurseRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/kontakt': typeof KontaktRoute
-  '/kurse': typeof KurseRoute
+  '/kurse': typeof KurseRouteWithChildren
   '/standorte': typeof StandorteRoute
   '/vermietung': typeof VermietungRoute
+  '/kurse/$slug': typeof KurseSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/kontakt': typeof KontaktRoute
-  '/kurse': typeof KurseRoute
+  '/kurse': typeof KurseRouteWithChildren
   '/standorte': typeof StandorteRoute
   '/vermietung': typeof VermietungRoute
+  '/kurse/$slug': typeof KurseSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/kontakt': typeof KontaktRoute
-  '/kurse': typeof KurseRoute
+  '/kurse': typeof KurseRouteWithChildren
   '/standorte': typeof StandorteRoute
   '/vermietung': typeof VermietungRoute
+  '/kurse/$slug': typeof KurseSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/kontakt' | '/kurse' | '/standorte' | '/vermietung'
+  fullPaths:
+    | '/'
+    | '/kontakt'
+    | '/kurse'
+    | '/standorte'
+    | '/vermietung'
+    | '/kurse/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/kontakt' | '/kurse' | '/standorte' | '/vermietung'
-  id: '__root__' | '/' | '/kontakt' | '/kurse' | '/standorte' | '/vermietung'
+  to:
+    | '/'
+    | '/kontakt'
+    | '/kurse'
+    | '/standorte'
+    | '/vermietung'
+    | '/kurse/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/kontakt'
+    | '/kurse'
+    | '/standorte'
+    | '/vermietung'
+    | '/kurse/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   KontaktRoute: typeof KontaktRoute
-  KurseRoute: typeof KurseRoute
+  KurseRoute: typeof KurseRouteWithChildren
   StandorteRoute: typeof StandorteRoute
   VermietungRoute: typeof VermietungRoute
 }
@@ -116,13 +144,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/kurse/$slug': {
+      id: '/kurse/$slug'
+      path: '/$slug'
+      fullPath: '/kurse/$slug'
+      preLoaderRoute: typeof KurseSlugRouteImport
+      parentRoute: typeof KurseRoute
+    }
   }
 }
+
+interface KurseRouteChildren {
+  KurseSlugRoute: typeof KurseSlugRoute
+}
+
+const KurseRouteChildren: KurseRouteChildren = {
+  KurseSlugRoute: KurseSlugRoute,
+}
+
+const KurseRouteWithChildren = KurseRoute._addFileChildren(KurseRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   KontaktRoute: KontaktRoute,
-  KurseRoute: KurseRoute,
+  KurseRoute: KurseRouteWithChildren,
   StandorteRoute: StandorteRoute,
   VermietungRoute: VermietungRoute,
 }

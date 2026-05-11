@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { courses, getCourse } from "@/lib/courses";
+import { courses, getCourse, type Course } from "@/lib/courses";
 
 export const Route = createFileRoute("/kurse/$slug")({
   loader: ({ params }) => {
