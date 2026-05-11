@@ -142,7 +142,7 @@ function StandortePage() {
   );
 }
 
-function Detail({ label, value }: { label: string; value: React.ReactNode }) {
+function Detail({ label, value }: { label: string; value: ReactNode }) {
   return (
     <div className="border-t border-border-strong pt-5">
       <div className="eyebrow opacity-60">{label}</div>
