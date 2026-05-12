@@ -98,10 +98,7 @@ function VermietungPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
           <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-16 md:px-10 md:pb-24">
-            <div
-              className="hero-fade-up eyebrow opacity-80"
-              style={{ animationDelay: "600ms" }}
-            >
+            <div className="hero-fade-up eyebrow opacity-80" style={{ animationDelay: "600ms" }}>
               Vermietung
             </div>
             <h1 className="display-xl mt-6 max-w-4xl">
@@ -184,7 +181,10 @@ function VermietungPage() {
         <section className="bg-background">
           <div className="mx-auto max-w-[1600px] grid gap-12 border-t border-border px-6 py-24 md:grid-cols-3 md:px-10 md:py-32">
             {[
-              { t: "Inklusive", d: "Helm, Handschuhe und Vollkaskoversicherung. Selbstbehalt im Schadensfall CHF 2’000." },
+              {
+                t: "Inklusive",
+                d: "Helm, Handschuhe und Vollkaskoversicherung. Selbstbehalt im Schadensfall CHF 2’000.",
+              },
               {
                 t: "Voraussetzung",
                 d: "Gültiger Führerausweis der entsprechenden Kategorie. Mindestalter 25.",
