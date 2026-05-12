@@ -27,9 +27,20 @@ const planned = [
   { city: "Luzern", year: "2027" },
 ];
 
+function W({ children, delay }: { children: React.ReactNode; delay: number }) {
+  return (
+    <span className="word-rise-wrap">
+      <span className="word-rise" style={{ animationDelay: `${delay}ms` }}>
+        {children}
+      </span>
+    </span>
+  );
+}
+
 function StandortePage() {
   return (
     <>
+      <div className="hero-curtain" aria-hidden="true" />
       <Header />
       <main className="pt-16">
         {/* HERO */}
@@ -37,17 +48,30 @@ function StandortePage() {
           <img
             src={horgenImg}
             alt="Horgen am Zürichsee"
-            className="absolute inset-0 h-full w-full object-cover"
+            className="hero-img-zoom absolute inset-0 h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/40" />
           <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 md:px-10 md:pb-28">
-            <div className="eyebrow opacity-80">Standorte</div>
+            <div className="hero-fade-up eyebrow opacity-80" style={{ animationDelay: "600ms" }}>
+              Standorte
+            </div>
             <h1 className="display-xl mt-6 max-w-5xl">
-              Heute Horgen.
+              <W delay={750}>Heute</W> <W delay={870}>Horgen.</W>
               <br />
-              <span className="opacity-70">Morgen die Schweiz.</span>
+              <W delay={1000}>
+                <span className="opacity-70">Morgen</span>
+              </W>{" "}
+              <W delay={1100}>
+                <span className="opacity-70">die</span>
+              </W>{" "}
+              <W delay={1200}>
+                <span className="opacity-70">Schweiz.</span>
+              </W>
             </h1>
-            <p className="mt-8 max-w-xl text-base opacity-85 md:text-lg">
+            <p
+              className="hero-fade-up mt-8 max-w-xl text-base opacity-85 md:text-lg"
+              style={{ animationDelay: "1400ms" }}
+            >
               Wir starten am Zürichsee — und öffnen unser Netzwerk Schritt für Schritt für weitere
               Fahrschulen in der ganzen Schweiz.
             </p>
@@ -96,28 +120,39 @@ function StandortePage() {
                     }
                   />
                   <Detail
-                    label="Anreise"
+                    label="Kontakt"
                     value={
                       <>
-                        S2/S8 bis Horgen
+                        <a
+                          href="tel:+41764303101"
+                          className="underline underline-offset-2 transition-opacity hover:opacity-60"
+                        >
+                          +41 76 430 31 01
+                        </a>
                         <br />
-                        A3 Ausfahrt 38
-                        <br />
-                        Parkplätze vorhanden
+                        <a
+                          href="mailto:info@motorradkurse-zuerich.ch"
+                          className="underline underline-offset-2 transition-opacity hover:opacity-60"
+                        >
+                          info@motorradkurse-zuerich.ch
+                        </a>
                       </>
                     }
                   />
                 </div>
 
                 <div className="mt-16 flex flex-wrap gap-3">
-                  <Link to="/kontakt" className="btn-pill-solid bg-foreground text-background">
+                  <Link
+                    to="/kontakt"
+                    className="btn-pill-solid bg-foreground text-background hover:opacity-75"
+                  >
                     Standort kontaktieren <ArrowRight className="size-4" />
                   </Link>
                   <a
-                    href="https://maps.google.com/?q=Horgen+Schweiz"
+                    href="https://maps.google.com/?q=Seestrasse+1,+8810+Horgen,+Schweiz"
                     target="_blank"
                     rel="noreferrer"
-                    className="btn-pill text-foreground"
+                    className="btn-pill text-foreground hover:bg-foreground/8"
                   >
                     <MapPin className="size-4" /> <span>In Maps öffnen</span>
                   </a>

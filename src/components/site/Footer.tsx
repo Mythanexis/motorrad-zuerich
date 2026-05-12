@@ -46,7 +46,7 @@ export function Footer() {
                 Seestrasse 1<br />
                 8810 Horgen
               </li>
-              <li>+41 44 000 00 00</li>
+              <li>+41 76 430 31 01</li>
               <li>info@motorradkurse-zuerich.ch</li>
             </ul>
           </div>

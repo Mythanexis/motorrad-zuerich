@@ -64,8 +64,8 @@ function KontaktPage() {
             <ContactTile
               icon={<Phone className="size-4" />}
               label="Telefon"
-              value="+41 44 000 00 00"
-              href="tel:+41440000000"
+              value="+41 76 430 31 01"
+              href="tel:+41764303101"
             />
             <ContactTile
               icon={<Mail className="size-4" />}
