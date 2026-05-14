@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { courses, type Course } from "@/lib/courses";
 
@@ -23,8 +22,7 @@ export const Route = createFileRoute("/kurse/")({
 function KursePage() {
   return (
     <>
-      <Header />
-      <main className="pt-16">
+      <main>
         {/* HEADER */}
         <section className="bg-background">
           <div className="mx-auto max-w-[1600px] px-6 pt-24 pb-16 md:px-10 md:pt-32 md:pb-24">

@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Section } from "@/components/site/Section";
 import { courses } from "@/lib/courses";
@@ -36,8 +35,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <>
-      <Header variant="overlay" />
-      <main>
+      <main className="-mt-16">
         {/* HERO */}
         <div className="hero-curtain" aria-hidden="true" />
         <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-black text-white">

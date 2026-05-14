@@ -1,6 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight, Check, ChevronRight } from "lucide-react";
-import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { courses, getCourse, type Course } from "@/lib/courses";
 
@@ -25,8 +24,7 @@ export const Route = createFileRoute("/kurse/$slug")({
   },
   notFoundComponent: () => (
     <>
-      <Header />
-      <main className="pt-32 pb-32 text-center">
+      <main className="pb-32 pt-20 text-center">
         <div className="eyebrow opacity-60">404</div>
         <h1 className="display-lg mt-4">Kurs nicht gefunden.</h1>
         <Link to="/kurse" className="btn-pill mt-10 inline-flex">
@@ -68,8 +66,7 @@ function CourseDetail() {
   return (
     <>
       <div className="hero-curtain" />
-      <Header variant="overlay" />
-      <main>
+      <main className="-mt-16">
         {/* HERO */}
         <section className="relative h-svh overflow-hidden bg-surface text-surface-foreground">
           <img
