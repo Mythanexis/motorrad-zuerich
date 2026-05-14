@@ -2,9 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Footer } from "@/components/site/Footer";
 import { Section } from "@/components/site/Section";
+import { VermietungSection } from "@/components/site/VermietungSection";
 import { courses } from "@/lib/courses";
 import heroBike from "@/assets/hero-kurs.webp";
-import rentalImg from "@/assets/rental-bikes.jpg";
 
 function W({ children, delay }: { children: React.ReactNode; delay: number }) {
   return (
@@ -139,36 +139,7 @@ function Index() {
           </div>
         </section>
 
-        {/* RENTAL */}
-        <section className="bg-surface text-surface-foreground">
-          <div className="mx-auto grid max-w-[1600px] gap-0 md:grid-cols-2">
-            <div className="relative aspect-[4/3] md:aspect-auto">
-              <img
-                src={rentalImg}
-                alt="Motorräder zur Vermietung"
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <div className="flex flex-col justify-center px-6 py-20 md:px-16 md:py-32">
-              <div className="eyebrow opacity-60">02 — Vermietung</div>
-              <h2 className="display-lg mt-4">
-                Drei Maschinen.
-                <br />
-                <span className="opacity-60">Bereit, wenn Sie es sind.</span>
-              </h2>
-              <p className="mt-8 max-w-md text-base opacity-80">
-                Eine sorgfältig kuratierte Auswahl an Motorrädern für Kursteilnehmer und
-                Privatfahrer. Tageweise, stundenweise, kompromisslos gewartet.
-              </p>
-              <div className="mt-10">
-                <Link to="/vermietung" className="btn-pill text-white">
-                  <span>Verfügbarkeit prüfen</span> <ArrowRight className="size-4" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        <VermietungSection />
 
         {/* STATS */}
         <Section>
