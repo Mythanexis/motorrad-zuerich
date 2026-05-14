@@ -22,7 +22,7 @@ export function VermietungSection() {
           <h2 className="display-lg mt-4">
             Drei Maschinen.
             <br />
-            Bereit, wenn Sie es sind.
+            <span className="opacity-60">Bereit, wenn Sie es sind.</span>
           </h2>
           <p className="mt-8 max-w-md text-base opacity-80">
             Eine sorgfältig kuratierte Auswahl an Motorrädern für Kursteilnehmer und Privatfahrer.
