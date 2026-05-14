@@ -62,8 +62,6 @@ export function Navbar(_props?: { variant?: "light" | "overlay" }) {
     setOpen(false);
   }, [pathname]);
 
-  const buchenActive = pathname === "/kontakt" || pathname.startsWith("/kontakt/");
-
   return (
     <header
       className={cn(
@@ -113,10 +111,10 @@ export function Navbar(_props?: { variant?: "light" | "overlay" }) {
             <Link
               to="/kontakt"
               className={cn(
-                "rounded-none px-5 py-2.5 text-sm font-medium transition-opacity",
+                "rounded-none px-5 py-2.5 text-sm font-medium transition-opacity outline-none",
                 "bg-foreground text-background hover:opacity-90",
-                buchenActive && "ring-2 ring-foreground ring-offset-2 ring-offset-background",
-                isOverlay && "ring-offset-transparent",
+                "focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                isOverlay && "focus-visible:ring-offset-transparent",
               )}
             >
               Buchen
@@ -174,10 +172,7 @@ export function Navbar(_props?: { variant?: "light" | "overlay" }) {
             <Link
               to="/kontakt"
               onClick={() => setOpen(false)}
-              className={cn(
-                "mt-8 inline-flex w-full items-center justify-center bg-foreground px-6 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-90",
-                buchenActive && "ring-2 ring-foreground ring-offset-2 ring-offset-background",
-              )}
+              className="mt-8 inline-flex w-full items-center justify-center bg-foreground px-6 py-3.5 text-sm font-medium text-background outline-none transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               Buchen
             </Link>
