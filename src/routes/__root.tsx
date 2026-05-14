@@ -10,6 +10,7 @@ import {
 
 import { useSmoothScroll } from "../hooks/use-smooth-scroll";
 import { ViewportIndicator } from "../components/ui/viewport-indicator";
+import { Navbar } from "../components/site/Navbar";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
@@ -141,6 +142,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <Navbar />
       <Outlet />
       <ViewportIndicator />
     </QueryClientProvider>

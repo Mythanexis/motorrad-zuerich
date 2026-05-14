@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ArrowRight, MapPin } from "lucide-react";
 import horgenImg from "@/assets/location-horgen.jpg";
@@ -41,8 +40,7 @@ function StandortePage() {
   return (
     <>
       <div className="hero-curtain" aria-hidden="true" />
-      <Header />
-      <main className="pt-16">
+      <main>
         {/* HERO */}
         <section className="relative h-[85vh] min-h-[560px] overflow-hidden bg-surface text-surface-foreground">
           <img

@@ -103,6 +103,7 @@
   html {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    scrollbar-gutter: stable;
   }
 
   body {

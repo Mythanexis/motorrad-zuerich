@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import rentalImg from "@/assets/rental-bikes.jpg";
 import bikeMt07 from "@/assets/bike-mt07.jpg";
@@ -88,8 +87,7 @@ function VermietungPage() {
   return (
     <>
       <div className="hero-curtain" aria-hidden="true" />
-      <Header />
-      <main className="pt-16">
+      <main>
         <section className="relative h-[70vh] min-h-[480px] overflow-hidden bg-surface text-surface-foreground">
           <img
             src={rentalImg}

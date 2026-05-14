@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
-import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 
 export const Route = createFileRoute("/kontakt")({
@@ -36,8 +35,7 @@ function KontaktPage() {
 
   return (
     <>
-      <Header />
-      <main className="pt-16">
+      <main>
         {/* HERO */}
         <section className="bg-foreground text-background">
           <div className="mx-auto max-w-[1600px] px-6 pt-24 pb-20 md:px-10 md:pt-32 md:pb-28">
