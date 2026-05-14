@@ -73,56 +73,55 @@ export function Navbar(_props?: { variant?: "light" | "overlay" }) {
           : "border-b border-border bg-background/90 text-foreground backdrop-blur-md",
       )}
     >
-      <div className="mx-auto grid h-16 max-w-[1600px] grid-cols-[1fr_auto_1fr] items-center px-6 md:px-10">
+      <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-6 md:px-10">
         <Link
           to="/"
           className={cn(
-            "justify-self-start text-base font-semibold tracking-[0.18em] [font-variant:small-caps]",
+            "text-base font-semibold tracking-[0.18em] [font-variant:small-caps]",
             isOverlay ? "text-white" : "text-foreground",
           )}
         >
           MK<span className="opacity-60">·</span>ZÜRICH
         </Link>
 
-        <nav className="hidden justify-self-center gap-10 md:flex" aria-label="Hauptnavigation">
-          {navItems.map((n) => {
-            const active = isRouteActive(pathname, n.to);
-            return (
-              <Link
-                key={n.to}
-                to={n.to}
-                className={cn(
-                  "relative py-1 text-sm font-medium transition-colors",
-                  "after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-out",
-                  "hover:after:scale-x-100",
-                  active && "after:scale-x-100",
-                  isOverlay
-                    ? active
-                      ? "text-white"
-                      : "text-white/80 hover:text-white"
-                    : active
-                      ? "text-foreground"
-                      : "text-foreground/70 hover:text-foreground",
-                )}
-              >
-                {n.label}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="flex items-center justify-self-end gap-3">
-          <Link
-            to="/kontakt"
-            className={cn(
-              "hidden rounded-none px-5 py-2.5 text-sm font-medium transition-opacity md:inline-flex",
-              "bg-foreground text-background hover:opacity-90",
-              buchenActive && "ring-2 ring-foreground ring-offset-2 ring-offset-background",
-              isOverlay && "ring-offset-transparent",
-            )}
-          >
-            Buchen
-          </Link>
+        <div className="flex items-center gap-3 md:gap-8">
+          <nav className="hidden items-center gap-8 md:flex" aria-label="Hauptnavigation">
+            {navItems.map((n) => {
+              const active = isRouteActive(pathname, n.to);
+              return (
+                <Link
+                  key={n.to}
+                  to={n.to}
+                  className={cn(
+                    "relative py-1 text-sm font-medium transition-colors",
+                    "after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-out",
+                    "hover:after:scale-x-100",
+                    active && "after:scale-x-100",
+                    isOverlay
+                      ? active
+                        ? "text-white"
+                        : "text-white/80 hover:text-white"
+                      : active
+                        ? "text-foreground"
+                        : "text-foreground/70 hover:text-foreground",
+                  )}
+                >
+                  {n.label}
+                </Link>
+              );
+            })}
+            <Link
+              to="/kontakt"
+              className={cn(
+                "rounded-none px-5 py-2.5 text-sm font-medium transition-opacity",
+                "bg-foreground text-background hover:opacity-90",
+                buchenActive && "ring-2 ring-foreground ring-offset-2 ring-offset-background",
+                isOverlay && "ring-offset-transparent",
+              )}
+            >
+              Buchen
+            </Link>
+          </nav>
 
           <button
             type="button"
