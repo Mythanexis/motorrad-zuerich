@@ -127,9 +127,7 @@ export const kursSchema = defineType({
       title: "Kursbild",
       type: "image",
       options: { hotspot: true },
-      fields: [
-        defineField({ name: "alt", title: "Alt-Text", type: "string" }),
-      ],
+      fields: [defineField({ name: "alt", title: "Alt-Text", type: "string" })],
     }),
     defineField({
       name: "termine",
@@ -139,8 +137,17 @@ export const kursSchema = defineType({
         {
           type: "object",
           fields: [
-            defineField({ name: "label", title: "Datum", type: "string", description: 'z.B. "30. Mai – 1. Jun 2026"' }),
-            defineField({ name: "spots", title: "Freie Plätze (-1 = Auf Anfrage)", type: "number" }),
+            defineField({
+              name: "label",
+              title: "Datum",
+              type: "string",
+              description: 'z.B. "30. Mai – 1. Jun 2026"',
+            }),
+            defineField({
+              name: "spots",
+              title: "Freie Plätze (-1 = Auf Anfrage)",
+              type: "number",
+            }),
           ],
           preview: { select: { title: "label", subtitle: "spots" } },
         },

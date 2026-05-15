@@ -8,10 +8,7 @@ export default defineConfig({
   title: "Motorradkurse Zürich",
   projectId: "bhak4wmc",
   dataset: "production",
-  plugins: [
-    structureTool(),
-    visionTool(),
-  ],
+  plugins: [structureTool(), visionTool()],
   schema: {
     types: [kursSchema],
   },

@@ -215,9 +215,7 @@ function Index() {
 
 function CourseCard({ kurs }: { kurs: SanityKurs }) {
   const slug = kurs.slug.current;
-  const imgSrc = kurs.bild
-    ? urlFor(kurs.bild).width(1200).height(1360).auto("format").url()
-    : null;
+  const imgSrc = kurs.bild ? urlFor(kurs.bild).width(1200).height(1360).auto("format").url() : null;
 
   return (
     <Link

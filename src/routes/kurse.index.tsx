@@ -95,9 +95,7 @@ function KursePage() {
 
 function CourseTile({ kurs }: { kurs: SanityKurs }) {
   const slug = kurs.slug.current;
-  const imgSrc = kurs.bild
-    ? urlFor(kurs.bild).width(800).height(640).auto("format").url()
-    : null;
+  const imgSrc = kurs.bild ? urlFor(kurs.bild).width(800).height(640).auto("format").url() : null;
   const code = String(kurs.nummer ?? "").padStart(2, "0");
 
   return (

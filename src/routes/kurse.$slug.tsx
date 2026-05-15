@@ -1,7 +1,14 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight, Check, ChevronRight } from "lucide-react";
 import { Footer } from "@/components/site/Footer";
-import { sanityClient, KURS_BY_SLUG_QUERY, KURSE_QUERY, urlFor, formatDauer, type SanityKurs } from "@/lib/sanity";
+import {
+  sanityClient,
+  KURS_BY_SLUG_QUERY,
+  KURSE_QUERY,
+  urlFor,
+  formatDauer,
+  type SanityKurs,
+} from "@/lib/sanity";
 
 export const Route = createFileRoute("/kurse/$slug")({
   loader: async ({ params }) => {
@@ -65,9 +72,7 @@ function CourseDetail() {
   const statsDelay = taglineDelay + 150;
   const code = String(kurs.nummer ?? "").padStart(2, "0");
 
-  const imgSrc = kurs.bild
-    ? urlFor(kurs.bild).width(1600).height(900).auto("format").url()
-    : null;
+  const imgSrc = kurs.bild ? urlFor(kurs.bild).width(1600).height(900).auto("format").url() : null;
 
   const termine = kurs.termine ?? [];
   const aufAnfrage = termine.length === 0 || termine[0]?.spots === -1;
