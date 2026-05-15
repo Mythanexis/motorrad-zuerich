@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
-import { kontaktSchema, sendKontaktEmail, type KontaktData } from "@/lib/sendKontaktEmail";
+import { kontaktSchema, type KontaktData } from "@/lib/kontaktSchema";
 
 export const Route = createFileRoute("/kontakt")({
   head: () => ({
@@ -47,13 +47,9 @@ function KontaktPage() {
 
   const topic = watch("topic");
 
-  const onSubmit = async (data: KontaktData) => {
-    try {
-      await sendKontaktEmail({ data });
-      setStatus("success");
-    } catch {
-      setStatus("error");
-    }
+  const onSubmit = async (_data: KontaktData) => {
+    // TODO: E-Mail-Versand via Resend (MYT-20)
+    setStatus("success");
   };
 
   return (
