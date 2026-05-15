@@ -227,7 +227,7 @@ function CourseDetail() {
                       return (
                         <li
                           key={d.label}
-                          className="grid items-center gap-6 border-b border-white/10 py-6 md:grid-cols-12"
+                          className="grid items-center gap-6 border-b border-white/20 py-6 md:grid-cols-12"
                         >
                           <span className="text-lg font-medium md:col-span-6">{d.label}</span>
                           <span
@@ -266,11 +266,11 @@ function CourseDetail() {
             <div className="grid gap-16 md:grid-cols-2 md:gap-24">
               <div>
                 <div className="eyebrow opacity-60">Im Kurs enthalten</div>
-                <ul className="mt-8 space-y-4">
+                <ul className="mt-8">
                   {(kurs.enthalten ?? []).map((item) => (
                     <li
                       key={item}
-                      className="flex items-center gap-3 border-t border-border py-4 text-base"
+                      className="flex items-center gap-3 border-t border-border py-6 text-base"
                     >
                       <Check className="size-4 shrink-0 opacity-50" />
                       <span>{item}</span>
@@ -284,7 +284,7 @@ function CourseDetail() {
                   {(kurs.anforderungen ?? []).map((item) => (
                     <li
                       key={item}
-                      className="flex items-center gap-3 border-t border-border py-4 text-base"
+                      className="flex items-center gap-3 border-t border-border py-6 text-base"
                     >
                       <span className="size-1.5 shrink-0 rounded-full bg-foreground/40" />
                       <span>{item}</span>

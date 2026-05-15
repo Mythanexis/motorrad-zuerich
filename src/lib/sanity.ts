@@ -95,6 +95,33 @@ export const KURS_BY_SLUG_QUERY = `*[_type == "kurs" && slug.current == $slug &&
 
 export const ALLE_SLUGS_QUERY = `*[_type == "kurs" && aktiv == true].slug.current`;
 
+export type SanityMotorrad = {
+  _id: string;
+  nummer: number;
+  name: string;
+  kategorie: string;
+  tagline: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  bild: any;
+  specs: { bezeichnung: string; wert: string }[];
+  preisTag: string;
+  preisWoche: string;
+  ausgebucht: boolean;
+};
+
+export const MOTORRAEDER_QUERY = `*[_type == "motorrad"] | order(nummer asc) {
+  _id,
+  nummer,
+  name,
+  kategorie,
+  tagline,
+  bild,
+  specs,
+  preisTag,
+  preisWoche,
+  ausgebucht
+}`;
+
 // Tomi can type "3 Tage | 12 Std" — this renders it as "3 Tage · 12 Std"
 export function formatDauer(dauer: string | undefined): string {
   if (!dauer) return "";

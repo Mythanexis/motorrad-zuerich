@@ -229,7 +229,7 @@ function CourseCard({ kurs }: { kurs: SanityKurs }) {
             src={imgSrc}
             alt={kurs.titel}
             loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+            className="h-full w-full object-cover"
           />
         ) : (
           <div className="h-full w-full bg-surface-strong" />
