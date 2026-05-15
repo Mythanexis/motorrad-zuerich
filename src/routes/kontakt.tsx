@@ -1,4 +1,4 @@
-import { forwardRef, useState, type ReactNode } from "react";
+import React, { forwardRef, useState, type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -20,6 +20,16 @@ export const Route = createFileRoute("/kontakt")({
   }),
   component: KontaktPage,
 });
+
+function W({ children, delay }: { children: React.ReactNode; delay: number }) {
+  return (
+    <span className="word-rise-wrap">
+      <span className="word-rise" style={{ animationDelay: `${delay}ms` }}>
+        {children}
+      </span>
+    </span>
+  );
+}
 
 const topics = [
   "Grundkurs",
@@ -54,6 +64,7 @@ function KontaktPage() {
 
   return (
     <>
+      <div className="hero-curtain" aria-hidden="true" />
       <main>
         {/* HERO */}
         <section className="bg-foreground text-background">
@@ -62,27 +73,19 @@ function KontaktPage() {
               <div className="md:col-span-8">
                 <div
                   className="hero-fade-up eyebrow opacity-60"
-                  style={{ animationDelay: "200ms" }}
+                  style={{ animationDelay: "600ms" }}
                 >
                   Kontakt
                 </div>
                 <h1 className="display-xl mt-6">
-                  <span className="word-rise-wrap">
-                    <span className="word-rise" style={{ animationDelay: "350ms" }}>
-                      Sprechen
-                    </span>
-                  </span>
+                  <W delay={750}>Sprechen</W>
                   <br />
-                  <span className="word-rise-wrap">
-                    <span className="word-rise" style={{ animationDelay: "480ms" }}>
-                      wir.
-                    </span>
-                  </span>
+                  <W delay={870}>wir.</W>
                 </h1>
               </div>
               <p
                 className="hero-fade-up max-w-md text-base opacity-80 md:col-span-4 md:text-lg"
-                style={{ animationDelay: "650ms" }}
+                style={{ animationDelay: "1000ms" }}
               >
                 Anmeldungen, Reservationen, Partneranfragen — wir antworten innerhalb eines
                 Werktages.
