@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Footer } from "@/components/site/Footer";
 import { Section } from "@/components/site/Section";
 import { VermietungSection } from "@/components/site/VermietungSection";
-import { courses } from "@/lib/courses";
+import { sanityClient, KURSE_QUERY, urlFor, type SanityKurs } from "@/lib/sanity";
 import heroBike from "@/assets/hero-kurs.webp";
 
 function W({ children, delay }: { children: React.ReactNode; delay: number }) {
@@ -17,6 +17,10 @@ function W({ children, delay }: { children: React.ReactNode; delay: number }) {
 }
 
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    const kurse = await sanityClient.fetch<SanityKurs[]>(KURSE_QUERY);
+    return { kurse: kurse.slice(0, 2) };
+  },
   head: () => ({
     meta: [
       { title: "Motorradkurse Zürich — Grundkurse, WAB & Vermietung in Horgen" },
@@ -33,6 +37,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const { kurse } = Route.useLoaderData();
   return (
     <>
       <main className="-mt-16">
@@ -124,16 +129,8 @@ function Index() {
             </div>
 
             <div className="course-row flex flex-col gap-6 md:flex-row">
-              {courses.slice(0, 2).map((c) => (
-                <CourseCard
-                  key={c.slug}
-                  slug={c.slug}
-                  img={c.img}
-                  tags={c.tags}
-                  title={c.title}
-                  desc={c.description}
-                  cta="Entdecken"
-                />
+              {kurse.map((k) => (
+                <CourseCard key={k._id} kurs={k} />
               ))}
             </div>
           </div>
@@ -187,21 +184,10 @@ function Index() {
   );
 }
 
-function CourseCard({
-  slug,
-  img,
-  tags,
-  title,
-  desc,
-  cta,
-}: {
-  slug: string;
-  img: string;
-  tags: string[];
-  title: string;
-  desc: string;
-  cta: string;
-}) {
+function CourseCard({ kurs }: { kurs: SanityKurs }) {
+  const slug = kurs.slug.current;
+  const imgSrc = kurs.bild ? urlFor(kurs.bild).width(1200).height(1360).auto("format").url() : null;
+
   return (
     <Link
       to="/kurse/$slug"
@@ -209,24 +195,27 @@ function CourseCard({
       className="course-card group relative flex-1 overflow-hidden rounded-2xl bg-surface text-surface-foreground transition-[flex-grow] duration-500 ease-out hover:flex-[1.2]"
     >
       <div className="relative h-[480px] w-full overflow-hidden md:h-[680px]">
-        <img
-          src={img}
-          alt={title}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-        />
+        {imgSrc ? (
+          <img
+            src={imgSrc}
+            alt={kurs.titel}
+            loading="lazy"
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div className="h-full w-full bg-surface-strong" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
 
-        {/* Title top */}
         <div className="absolute left-0 right-0 top-0 p-6 md:p-8">
           <h3 className="text-3xl font-medium leading-tight text-white drop-shadow md:text-4xl">
-            {title}
+            {kurs.titel}
           </h3>
         </div>
 
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
           <div className="mb-4 flex flex-wrap gap-2">
-            {tags.map((t) => (
+            {(kurs.badges ?? []).map((t) => (
               <span
                 key={t}
                 className="rounded-full border border-white/40 bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md"
@@ -236,9 +225,9 @@ function CourseCard({
             ))}
           </div>
           <div className="flex items-end justify-between gap-6">
-            <p className="max-w-xs text-sm text-white/85">{desc}</p>
+            <p className="max-w-xs text-sm text-white/85">{kurs.beschreibung}</p>
             <span className="relative inline-flex shrink-0 items-center gap-2 pb-1 text-sm font-medium text-white after:absolute after:bottom-0 after:left-0 after:h-[0.5px] after:w-full after:origin-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 group-hover:after:scale-x-100">
-              {cta}
+              Entdecken
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             </span>
           </div>

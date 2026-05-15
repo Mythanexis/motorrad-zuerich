@@ -1,10 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useLoaderData } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Footer } from "@/components/site/Footer";
 import rentalImg from "@/assets/rental-bikes.jpg";
-import bikeMt07 from "@/assets/bike-mt07.jpg";
-import bikeCb650r from "@/assets/bike-cb650r.jpg";
-import bikeGs from "@/assets/bike-gs1250.jpg";
+import { sanityClient, urlFor, MOTORRAEDER_QUERY, type SanityMotorrad } from "@/lib/sanity";
 
 export const Route = createFileRoute("/vermietung")({
   head: () => ({
@@ -22,56 +20,9 @@ export const Route = createFileRoute("/vermietung")({
       },
     ],
   }),
+  loader: () => sanityClient.fetch<SanityMotorrad[]>(MOTORRAEDER_QUERY),
   component: VermietungPage,
 });
-
-const bikes = [
-  {
-    no: "01",
-    img: bikeMt07,
-    name: "Yamaha MT-07",
-    cat: "Kat. A2 · 35 kW",
-    tagline: "Der wendige Begleiter für den Einstieg.",
-    specs: [
-      { l: "Hubraum", v: "689 ccm" },
-      { l: "Leistung", v: "73 PS" },
-      { l: "Gewicht", v: "184 kg" },
-      { l: "Typ", v: "Naked" },
-    ],
-    day: "CHF 140",
-    week: "CHF 720",
-  },
-  {
-    no: "02",
-    img: bikeCb650r,
-    name: "Honda CB650R",
-    cat: "Kat. A · unbeschränkt",
-    tagline: "Neo Sports Cafe — pure Linie, voller Klang.",
-    specs: [
-      { l: "Hubraum", v: "649 ccm" },
-      { l: "Leistung", v: "95 PS" },
-      { l: "Gewicht", v: "202 kg" },
-      { l: "Typ", v: "Sport" },
-    ],
-    day: "CHF 170",
-    week: "CHF 870",
-  },
-  {
-    no: "03",
-    img: bikeGs,
-    name: "BMW R 1250 GS",
-    cat: "Kat. A · Touring",
-    tagline: "Die Königin der Adventure-Bikes.",
-    specs: [
-      { l: "Hubraum", v: "1254 ccm" },
-      { l: "Leistung", v: "136 PS" },
-      { l: "Gewicht", v: "249 kg" },
-      { l: "Typ", v: "Adventure" },
-    ],
-    day: "CHF 220",
-    week: "CHF 1’150",
-  },
-];
 
 function W({ children, delay }: { children: React.ReactNode; delay: number }) {
   return (
@@ -84,6 +35,8 @@ function W({ children, delay }: { children: React.ReactNode; delay: number }) {
 }
 
 function VermietungPage() {
+  const bikes = useLoaderData({ from: "/vermietung" });
+
   return (
     <>
       <div className="hero-curtain" aria-hidden="true" />
@@ -94,7 +47,7 @@ function VermietungPage() {
             alt=""
             className="hero-img-zoom absolute inset-0 h-full w-full object-cover opacity-70"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent" />
           <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-16 md:px-10 md:pb-24">
             <div className="hero-fade-up eyebrow opacity-80" style={{ animationDelay: "600ms" }}>
               Vermietung
@@ -116,17 +69,17 @@ function VermietungPage() {
           <div className="mx-auto max-w-[1600px] space-y-6 px-6 py-20 md:px-10 md:py-28">
             {bikes.map((b, i) => (
               <article
-                key={b.no}
+                key={b._id}
                 className={`group relative grid overflow-hidden rounded-3xl bg-surface text-surface-foreground md:min-h-[480px] md:grid-cols-12 ${
                   i % 2 === 1 ? "md:[&>div:first-child]:order-2" : ""
                 }`}
               >
                 {/* Image */}
                 <div className="relative md:col-span-7">
-                  <div className="aspect-[4/3] w-full overflow-hidden md:aspect-auto md:h-full">
+                  <div className="aspect-4/3 w-full overflow-hidden md:aspect-auto md:h-full">
                     <img
-                      src={b.img}
-                      alt={b.name}
+                      src={urlFor(b.bild).width(900).height(720).url()}
+                      alt={b.bild?.alt ?? b.name}
                       loading="lazy"
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                     />
@@ -138,18 +91,20 @@ function VermietungPage() {
                   <div>
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <div className="eyebrow opacity-60">{b.cat}</div>
+                        <div className="eyebrow opacity-60">{b.kategorie}</div>
                         <h2 className="display-md mt-3">{b.name}</h2>
                       </div>
-                      <span className="text-sm opacity-40">{b.no}</span>
+                      <span className="text-sm opacity-40">
+                        {String(b.nummer).padStart(2, "0")}
+                      </span>
                     </div>
                     <p className="mt-5 max-w-md text-base opacity-80">{b.tagline}</p>
 
                     <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5">
                       {b.specs.map((s) => (
-                        <div key={s.l} className="border-t border-white/20 pt-3">
-                          <dt className="eyebrow opacity-60">{s.l}</dt>
-                          <dd className="mt-1.5 text-base font-medium">{s.v}</dd>
+                        <div key={s.bezeichnung} className="border-t border-white/20 pt-3">
+                          <dt className="eyebrow opacity-60">{s.bezeichnung}</dt>
+                          <dd className="mt-1.5 text-base font-medium">{s.wert}</dd>
                         </div>
                       ))}
                     </dl>
@@ -159,16 +114,22 @@ function VermietungPage() {
                     <div>
                       <div className="eyebrow opacity-60">Tag · Woche</div>
                       <div className="mt-2 text-base font-medium">
-                        {b.day} <span className="opacity-50">/</span> {b.week}
+                        {b.preisTag} <span className="opacity-50">/</span> {b.preisWoche}
                       </div>
                     </div>
-                    <Link
-                      to="/kontakt"
-                      aria-label={`${b.name} reservieren`}
-                      className="inline-flex items-center gap-2 rounded-full border border-white/60 px-5 py-3 text-sm font-medium transition-colors hover:bg-white hover:text-surface"
-                    >
-                      Reservieren <ArrowRight className="size-4" />
-                    </Link>
+                    {b.ausgebucht ? (
+                      <span className="inline-flex cursor-not-allowed items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-medium opacity-40">
+                        Ausgebucht
+                      </span>
+                    ) : (
+                      <Link
+                        to="/kontakt"
+                        aria-label={`${b.name} reservieren`}
+                        className="inline-flex items-center gap-2 rounded-full border border-white/60 px-5 py-3 text-sm font-medium transition-colors hover:bg-white hover:text-surface"
+                      >
+                        Reservieren <ArrowRight className="size-4" />
+                      </Link>
+                    )}
                   </div>
                 </div>
               </article>
@@ -181,7 +142,7 @@ function VermietungPage() {
             {[
               {
                 t: "Inklusive",
-                d: "Helm, Handschuhe und Vollkaskoversicherung. Selbstbehalt im Schadensfall CHF 2’000.",
+                d: "Helm, Handschuhe und Vollkaskoversicherung. Selbstbehalt im Schadensfall CHF 2'000.",
               },
               {
                 t: "Voraussetzung",
