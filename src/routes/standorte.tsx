@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, MapPin } from "lucide-react";
-import horgenImg from "@/assets/location-horgen.jpg";
+import horgenImg from "@/assets/location-horgen.webp";
 
 export const Route = createFileRoute("/standorte")({
   head: () => ({
