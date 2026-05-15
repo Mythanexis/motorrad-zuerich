@@ -60,7 +60,10 @@ function KontaktPage() {
           <div className="mx-auto max-w-[1600px] px-6 pt-24 pb-20 md:px-10 md:pt-32 md:pb-28">
             <div className="grid gap-10 md:grid-cols-12 md:items-end">
               <div className="md:col-span-8">
-                <div className="hero-fade-up eyebrow opacity-60" style={{ animationDelay: "200ms" }}>
+                <div
+                  className="hero-fade-up eyebrow opacity-60"
+                  style={{ animationDelay: "200ms" }}
+                >
                   Kontakt
                 </div>
                 <h1 className="display-xl mt-6">
@@ -198,11 +201,7 @@ function KontaktPage() {
                         error={errors.email?.message}
                         required
                       />
-                      <Field
-                        label="Telefon"
-                        type="tel"
-                        {...register("phone")}
-                      />
+                      <Field label="Telefon" type="tel" {...register("phone")} />
                     </div>
 
                     <TextareaField
