@@ -1,8 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
-import { Footer } from "@/components/site/Footer";
-
 export const Route = createFileRoute("/kontakt")({
   head: () => ({
     meta: [
@@ -170,7 +168,6 @@ function KontaktPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

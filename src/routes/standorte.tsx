@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Footer } from "@/components/site/Footer";
 import { ArrowRight, MapPin } from "lucide-react";
 import horgenImg from "@/assets/location-horgen.jpg";
 
@@ -245,7 +244,6 @@ function StandortePage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }
