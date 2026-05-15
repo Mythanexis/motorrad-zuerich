@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
-const RENTAL_IMAGE = "/assets/rental-bikes.jpg";
+const RENTAL_IMAGE = "/assets/rental-bikes.webp";
 
 /** MYT-13 — Vermietung: Bild, Text, CTA (Vite: statisches Bild unter `public/assets/`). */
 export function VermietungSection() {

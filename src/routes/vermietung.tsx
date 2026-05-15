@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useLoaderData } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Footer } from "@/components/site/Footer";
-import rentalImg from "@/assets/rental-bikes.jpg";
+import rentalImg from "@/assets/rental-bikes.webp";
 import { sanityClient, urlFor, MOTORRAEDER_QUERY, type SanityMotorrad } from "@/lib/sanity";
 
 export const Route = createFileRoute("/vermietung")({
