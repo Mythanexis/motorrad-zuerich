@@ -1,6 +1,10 @@
+import { forwardRef, useState, type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
+import { kontaktSchema, sendKontaktEmail, type KontaktData } from "@/lib/sendKontaktEmail";
+
 export const Route = createFileRoute("/kontakt")({
   head: () => ({
     meta: [
@@ -28,8 +32,29 @@ const topics = [
 ];
 
 function KontaktPage() {
-  const [sent, setSent] = useState(false);
-  const [topic, setTopic] = useState(topics[0]);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<KontaktData>({
+    resolver: zodResolver(kontaktSchema),
+    defaultValues: { topic: topics[0], honeypot: "" },
+  });
+
+  const topic = watch("topic");
+
+  const onSubmit = async (data: KontaktData) => {
+    try {
+      await sendKontaktEmail({ data });
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  };
 
   return (
     <>
@@ -39,14 +64,27 @@ function KontaktPage() {
           <div className="mx-auto max-w-[1600px] px-6 pt-24 pb-20 md:px-10 md:pt-32 md:pb-28">
             <div className="grid gap-10 md:grid-cols-12 md:items-end">
               <div className="md:col-span-8">
-                <div className="eyebrow opacity-60">Kontakt</div>
+                <div className="hero-fade-up eyebrow opacity-60" style={{ animationDelay: "200ms" }}>
+                  Kontakt
+                </div>
                 <h1 className="display-xl mt-6">
-                  Sprechen
+                  <span className="word-rise-wrap">
+                    <span className="word-rise" style={{ animationDelay: "350ms" }}>
+                      Sprechen
+                    </span>
+                  </span>
                   <br />
-                  wir.
+                  <span className="word-rise-wrap">
+                    <span className="word-rise" style={{ animationDelay: "480ms" }}>
+                      wir.
+                    </span>
+                  </span>
                 </h1>
               </div>
-              <p className="max-w-md text-base opacity-80 md:col-span-4 md:text-lg">
+              <p
+                className="hero-fade-up max-w-md text-base opacity-80 md:col-span-4 md:text-lg"
+                style={{ animationDelay: "650ms" }}
+              >
                 Anmeldungen, Reservationen, Partneranfragen — wir antworten innerhalb eines
                 Werktages.
               </p>
@@ -95,14 +133,14 @@ function KontaktPage() {
                 </p>
 
                 <div className="mt-16 space-y-6 border-t border-border-strong pt-6">
-                  <Stat n="<24h" l="Antwortzeit Mo–Fr" />
+                  <Stat n="&lt;24h" l="Antwortzeit Mo–Fr" />
                   <Stat n="98%" l="Bestehensquote" />
-                  <Stat n="1’200+" l="Ausgebildete Fahrer" />
+                  <Stat n="1'200+" l="Ausgebildete Fahrer" />
                 </div>
               </div>
 
               <div className="md:col-span-8">
-                {sent ? (
+                {status === "success" ? (
                   <div className="flex h-full flex-col items-start justify-center border-t border-border-strong pt-12">
                     <div className="eyebrow opacity-60">Vielen Dank</div>
                     <h3 className="display-lg mt-4">Wir melden uns.</h3>
@@ -112,13 +150,17 @@ function KontaktPage() {
                     </p>
                   </div>
                 ) : (
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      setSent(true);
-                    }}
-                    className="space-y-12"
-                  >
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-12">
+                    {/* Honeypot — unsichtbar für User, Bots füllen es aus */}
+                    <input
+                      {...register("honeypot")}
+                      type="text"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      className="absolute -left-[9999px] opacity-0"
+                      autoComplete="off"
+                    />
+
                     <div>
                       <div className="eyebrow opacity-60">Anliegen</div>
                       <div className="mt-4 flex flex-wrap gap-2">
@@ -126,7 +168,7 @@ function KontaktPage() {
                           <button
                             type="button"
                             key={t}
-                            onClick={() => setTopic(t)}
+                            onClick={() => setValue("topic", t)}
                             className={[
                               "rounded-full border px-4 py-2 text-sm transition-colors",
                               topic === t
@@ -141,13 +183,45 @@ function KontaktPage() {
                     </div>
 
                     <div className="grid gap-10 md:grid-cols-2">
-                      <Field label="Vorname" name="firstName" required />
-                      <Field label="Nachname" name="lastName" required />
-                      <Field label="E-Mail" name="email" type="email" required />
-                      <Field label="Telefon" name="phone" type="tel" />
+                      <Field
+                        label="Vorname"
+                        {...register("firstName")}
+                        error={errors.firstName?.message}
+                        required
+                      />
+                      <Field
+                        label="Nachname"
+                        {...register("lastName")}
+                        error={errors.lastName?.message}
+                        required
+                      />
+                      <Field
+                        label="E-Mail"
+                        type="email"
+                        {...register("email")}
+                        error={errors.email?.message}
+                        required
+                      />
+                      <Field
+                        label="Telefon"
+                        type="tel"
+                        {...register("phone")}
+                      />
                     </div>
 
-                    <TextareaField label="Nachricht" name="message" required />
+                    <TextareaField
+                      label="Nachricht"
+                      {...register("message")}
+                      error={errors.message?.message}
+                      required
+                    />
+
+                    {status === "error" && (
+                      <p className="text-sm text-red-500">
+                        Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder
+                        schreiben Sie uns direkt an info@motorradkurse-zuerich.ch.
+                      </p>
+                    )}
 
                     <div className="flex items-center justify-between gap-6 border-t border-border-strong pt-8">
                       <p className="max-w-md text-xs opacity-60">
@@ -156,9 +230,11 @@ function KontaktPage() {
                       </p>
                       <button
                         type="submit"
-                        className="btn-pill-solid bg-foreground text-background"
+                        disabled={isSubmitting}
+                        className="btn-pill-solid bg-foreground text-background disabled:opacity-50"
                       >
-                        Anfrage senden <ArrowRight className="size-4" />
+                        {isSubmitting ? "Wird gesendet…" : "Anfrage senden"}
+                        {!isSubmitting && <ArrowRight className="size-4" />}
                       </button>
                     </div>
                   </form>
@@ -210,54 +286,59 @@ function Stat({ n, l }: { n: string; l: string }) {
   );
 }
 
-function Field({
-  label,
-  name,
-  type = "text",
-  required,
-}: {
+type FieldProps = {
   label: string;
   name: string;
   type?: string;
   required?: boolean;
-}) {
-  return (
+  error?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+};
+
+const Field = forwardRef<HTMLInputElement, FieldProps>(
+  ({ label, type = "text", required, error, ...rest }, ref) => (
     <label className="block">
       <span className="eyebrow opacity-60">
         {label}
         {required && " *"}
       </span>
       <input
-        name={name}
+        ref={ref}
         type={type}
-        required={required}
         className="mt-3 w-full border-b border-border bg-transparent py-3 text-base outline-none transition-colors focus:border-foreground"
+        {...rest}
       />
+      {error && <span className="mt-1 block text-xs text-red-500">{error}</span>}
     </label>
-  );
-}
+  ),
+);
+Field.displayName = "Field";
 
-function TextareaField({
-  label,
-  name,
-  required,
-}: {
+type TextareaFieldProps = {
   label: string;
   name: string;
   required?: boolean;
-}) {
-  return (
+  error?: string;
+  onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
+  onBlur?: React.FocusEventHandler<HTMLTextAreaElement>;
+};
+
+const TextareaField = forwardRef<HTMLTextAreaElement, TextareaFieldProps>(
+  ({ label, required, error, ...rest }, ref) => (
     <label className="block">
       <span className="eyebrow opacity-60">
         {label}
         {required && " *"}
       </span>
       <textarea
-        name={name}
-        required={required}
+        ref={ref}
         rows={5}
         className="mt-3 w-full border-b border-border bg-transparent py-3 text-base outline-none transition-colors focus:border-foreground"
+        {...rest}
       />
+      {error && <span className="mt-1 block text-xs text-red-500">{error}</span>}
     </label>
-  );
-}
+  ),
+);
+TextareaField.displayName = "TextareaField";
