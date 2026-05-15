@@ -1,9 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Footer } from "@/components/site/Footer";
-import { courses, type Course } from "@/lib/courses";
+import { sanityClient, KURSE_QUERY, urlFor, formatDauer, type SanityKurs } from "@/lib/sanity";
 
 export const Route = createFileRoute("/kurse/")({
+  loader: async () => {
+    const kurse = await sanityClient.fetch<SanityKurs[]>(KURSE_QUERY);
+    return { kurse };
+  },
   head: () => ({
     meta: [
       { title: "Kurse — Motorradkurse Zürich" },
@@ -20,6 +24,8 @@ export const Route = createFileRoute("/kurse/")({
 });
 
 function KursePage() {
+  const { kurse } = Route.useLoaderData();
+
   return (
     <>
       <main>
@@ -28,7 +34,7 @@ function KursePage() {
           <div className="mx-auto max-w-[1600px] px-6 pt-24 pb-16 md:px-10 md:pt-32 md:pb-24">
             <div className="grid gap-10 md:grid-cols-12 md:items-end">
               <div className="md:col-span-8">
-                <div className="eyebrow opacity-60">Ausbildung · 6 Kurse</div>
+                <div className="eyebrow opacity-60">Ausbildung · {kurse.length} Kurse</div>
                 <h1 className="display-xl mt-6">
                   Alle Kurse.
                   <br />
@@ -50,8 +56,8 @@ function KursePage() {
         <section className="bg-background">
           <div className="mx-auto max-w-[1600px] px-6 py-16 md:px-10 md:py-24">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {courses.map((c) => (
-                <CourseTile key={c.slug} course={c} />
+              {kurse.map((k) => (
+                <CourseTile key={k._id} kurs={k} />
               ))}
             </div>
           </div>
@@ -87,23 +93,33 @@ function KursePage() {
   );
 }
 
-function CourseTile({ course }: { course: Course }) {
+function CourseTile({ kurs }: { kurs: SanityKurs }) {
+  const slug = kurs.slug.current;
+  const imgSrc = kurs.bild
+    ? urlFor(kurs.bild).width(800).height(640).auto("format").url()
+    : null;
+  const code = String(kurs.nummer ?? "").padStart(2, "0");
+
   return (
     <Link
       to="/kurse/$slug"
-      params={{ slug: course.slug }}
+      params={{ slug }}
       className="group relative flex flex-col overflow-hidden rounded-2xl bg-surface text-surface-foreground"
     >
       <div className="relative aspect-[5/4] w-full overflow-hidden">
-        <img
-          src={course.img}
-          alt={course.title}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-        />
+        {imgSrc ? (
+          <img
+            src={imgSrc}
+            alt={kurs.titel}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+          />
+        ) : (
+          <div className="h-full w-full bg-surface-strong" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30" />
         <div className="absolute left-5 top-5 flex flex-wrap gap-2">
-          {course.tags.map((t) => (
+          {(kurs.badges ?? []).map((t) => (
             <span
               key={t}
               className="rounded-full border border-white/40 bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md"
@@ -114,17 +130,19 @@ function CourseTile({ course }: { course: Course }) {
         </div>
         <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
           <h3 className="text-2xl font-medium leading-tight text-white drop-shadow md:text-3xl">
-            {course.title}
+            {kurs.titel}
           </h3>
           <span className="text-xs font-medium uppercase tracking-widest text-white/70">
-            {course.code}
+            {code}
           </span>
         </div>
       </div>
       <div className="flex items-center justify-between gap-4 p-6">
         <div>
-          <div className="eyebrow opacity-60">{course.duration}</div>
-          <div className="mt-1.5 text-base font-medium">{course.price}</div>
+          <div className="eyebrow opacity-60">{formatDauer(kurs.dauer)}</div>
+          <div className="mt-1.5 text-base font-medium">
+            {kurs.preisAufAnfrage ? "Auf Anfrage" : kurs.preis}
+          </div>
         </div>
         <span className="relative inline-flex items-center gap-2 pb-1 text-sm font-medium after:absolute after:bottom-0 after:left-0 after:h-[0.5px] after:w-full after:origin-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 group-hover:after:scale-x-100">
           Details <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
