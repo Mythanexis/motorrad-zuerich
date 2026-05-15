@@ -46,8 +46,16 @@ export function Footer() {
                 Seestrasse 1<br />
                 8810 Horgen
               </li>
-              <li>+41 76 430 31 01</li>
-              <li>info@motorradkurse-zuerich.ch</li>
+              <li>
+                <a href="tel:+41764303101" className="hover:opacity-100">
+                  +41 76 430 31 01
+                </a>
+              </li>
+              <li>
+                <a href="mailto:info@motorradkurse-zuerich.ch" className="hover:opacity-100">
+                  info@motorradkurse-zuerich.ch
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -55,15 +63,15 @@ export function Footer() {
         <div className="mt-20 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 text-xs opacity-60 md:flex-row md:items-center">
           <div>© {new Date().getFullYear()} Motorradkurse Zürich</div>
           <div className="flex gap-6">
-            <a href="#" className="hover:opacity-100">
+            <Link to="/impressum" className="hover:opacity-100">
               Impressum
-            </a>
-            <a href="#" className="hover:opacity-100">
+            </Link>
+            <Link to="/datenschutz" className="hover:opacity-100">
               Datenschutz
-            </a>
-            <a href="#" className="hover:opacity-100">
+            </Link>
+            <Link to="/agb" className="hover:opacity-100">
               AGB
-            </a>
+            </Link>
           </div>
         </div>
       </div>

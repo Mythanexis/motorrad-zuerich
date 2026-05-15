@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { CTASection } from "@/components/site/CTASection";
-import { Footer } from "@/components/site/Footer";
 import { Section } from "@/components/site/Section";
 import { StatsSection } from "@/components/site/StatsSection";
 import { VermietungSection } from "@/components/site/VermietungSection";
@@ -144,7 +143,6 @@ function Index() {
 
         <CTASection />
       </main>
-      <Footer />
     </>
   );
 }
