@@ -61,7 +61,7 @@ function KontaktPage() {
             <div className="grid gap-10 md:grid-cols-12 md:items-end">
               <div className="md:col-span-8">
                 <div
-                  className="hero-fade-up eyebrow opacity-60"
+                  className="hero-fade-up eyebrow opacity-80"
                   style={{ animationDelay: "200ms" }}
                 >
                   Kontakt
