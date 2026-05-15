@@ -13,6 +13,9 @@ import { Route as VermietungRouteImport } from './routes/vermietung'
 import { Route as StandorteRouteImport } from './routes/standorte'
 import { Route as KurseRouteImport } from './routes/kurse'
 import { Route as KontaktRouteImport } from './routes/kontakt'
+import { Route as ImpressumRouteImport } from './routes/impressum'
+import { Route as DatenschutzRouteImport } from './routes/datenschutz'
+import { Route as AgbRouteImport } from './routes/agb'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as KurseIndexRouteImport } from './routes/kurse.index'
 import { Route as KurseSlugRouteImport } from './routes/kurse.$slug'
@@ -37,6 +40,21 @@ const KontaktRoute = KontaktRouteImport.update({
   path: '/kontakt',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ImpressumRoute = ImpressumRouteImport.update({
+  id: '/impressum',
+  path: '/impressum',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DatenschutzRoute = DatenschutzRouteImport.update({
+  id: '/datenschutz',
+  path: '/datenschutz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgbRoute = AgbRouteImport.update({
+  id: '/agb',
+  path: '/agb',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -55,6 +73,9 @@ const KurseSlugRoute = KurseSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agb': typeof AgbRoute
+  '/datenschutz': typeof DatenschutzRoute
+  '/impressum': typeof ImpressumRoute
   '/kontakt': typeof KontaktRoute
   '/kurse': typeof KurseRouteWithChildren
   '/standorte': typeof StandorteRoute
@@ -64,6 +85,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agb': typeof AgbRoute
+  '/datenschutz': typeof DatenschutzRoute
+  '/impressum': typeof ImpressumRoute
   '/kontakt': typeof KontaktRoute
   '/standorte': typeof StandorteRoute
   '/vermietung': typeof VermietungRoute
@@ -73,6 +97,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agb': typeof AgbRoute
+  '/datenschutz': typeof DatenschutzRoute
+  '/impressum': typeof ImpressumRoute
   '/kontakt': typeof KontaktRoute
   '/kurse': typeof KurseRouteWithChildren
   '/standorte': typeof StandorteRoute
@@ -84,6 +111,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/agb'
+    | '/datenschutz'
+    | '/impressum'
     | '/kontakt'
     | '/kurse'
     | '/standorte'
@@ -93,6 +123,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/agb'
+    | '/datenschutz'
+    | '/impressum'
     | '/kontakt'
     | '/standorte'
     | '/vermietung'
@@ -101,6 +134,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/agb'
+    | '/datenschutz'
+    | '/impressum'
     | '/kontakt'
     | '/kurse'
     | '/standorte'
@@ -111,6 +147,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgbRoute: typeof AgbRoute
+  DatenschutzRoute: typeof DatenschutzRoute
+  ImpressumRoute: typeof ImpressumRoute
   KontaktRoute: typeof KontaktRoute
   KurseRoute: typeof KurseRouteWithChildren
   StandorteRoute: typeof StandorteRoute
@@ -145,6 +184,27 @@ declare module '@tanstack/react-router' {
       path: '/kontakt'
       fullPath: '/kontakt'
       preLoaderRoute: typeof KontaktRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/impressum': {
+      id: '/impressum'
+      path: '/impressum'
+      fullPath: '/impressum'
+      preLoaderRoute: typeof ImpressumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/datenschutz': {
+      id: '/datenschutz'
+      path: '/datenschutz'
+      fullPath: '/datenschutz'
+      preLoaderRoute: typeof DatenschutzRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agb': {
+      id: '/agb'
+      path: '/agb'
+      fullPath: '/agb'
+      preLoaderRoute: typeof AgbRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -185,6 +245,9 @@ const KurseRouteWithChildren = KurseRoute._addFileChildren(KurseRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgbRoute: AgbRoute,
+  DatenschutzRoute: DatenschutzRoute,
+  ImpressumRoute: ImpressumRoute,
   KontaktRoute: KontaktRoute,
   KurseRoute: KurseRouteWithChildren,
   StandorteRoute: StandorteRoute,
