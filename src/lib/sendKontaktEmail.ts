@@ -1,5 +1,4 @@
 import { createServerFn } from "@tanstack/react-start";
-import { Resend } from "resend";
 import { z } from "zod";
 
 export const kontaktSchema = z.object({
@@ -20,6 +19,7 @@ export const sendKontaktEmail = createServerFn({ method: "POST" })
     const apiKey = process.env.RESEND_API_KEY;
     if (!apiKey) throw new Error("RESEND_API_KEY nicht konfiguriert");
 
+    const { Resend } = await import("resend");
     const resend = new Resend(apiKey);
 
     await resend.emails.send({
