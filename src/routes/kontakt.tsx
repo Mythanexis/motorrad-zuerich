@@ -1,4 +1,4 @@
-import { forwardRef, useState, type ReactNode } from "react";
+import { forwardRef, useState, useRef, useEffect, useCallback, type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -93,24 +93,27 @@ function KontaktPage() {
 
         {/* QUICK CONTACTS */}
         <section className="bg-background">
-          <div className="mx-auto grid max-w-[1600px] gap-px bg-border md:grid-cols-3">
+          <div className="mx-auto grid max-w-[1600px] gap-px bg-border lg:grid-cols-3">
             <ContactTile
               icon={<Phone className="size-4" />}
               label="Telefon"
               value="+41 76 430 31 01"
               href="tel:+41764303101"
+              hoverIcon={<Phone className="size-5" />}
             />
             <ContactTile
               icon={<Mail className="size-4" />}
               label="E-Mail"
               value="info@motorradkurse-zuerich.ch"
               href="mailto:info@motorradkurse-zuerich.ch"
+              hoverIcon={<Mail className="size-5" />}
             />
             <ContactTile
               icon={<MapPin className="size-4" />}
               label="Standort"
               value="Seestrasse 1, 8810 Horgen"
               href="https://maps.google.com/?q=Seestrasse+1+Horgen"
+              hoverIcon={<MapPin className="size-5" />}
             />
           </div>
         </section>
@@ -248,18 +251,60 @@ function ContactTile({
   label,
   value,
   href,
+  hoverIcon,
 }: {
   icon: ReactNode;
   label: string;
   value: string;
   href: string;
+  hoverIcon: ReactNode;
 }) {
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const targetPos = useRef({ x: 0, y: 0 });
+  const currentPos = useRef({ x: 0, y: 0 });
+  const rafId = useRef<number>(0);
+  const isHovered = useRef(false);
+
+  const animate = useCallback(() => {
+    const lerp = 0.1;
+    currentPos.current.x += (targetPos.current.x - currentPos.current.x) * lerp;
+    currentPos.current.y += (targetPos.current.y - currentPos.current.y) * lerp;
+    if (tooltipRef.current) {
+      tooltipRef.current.style.left = `${currentPos.current.x}px`;
+      tooltipRef.current.style.top = `${currentPos.current.y}px`;
+    }
+    if (isHovered.current) rafId.current = requestAnimationFrame(animate);
+  }, []);
+
+  const handleMouseEnter = (e: React.MouseEvent) => {
+    isHovered.current = true;
+    targetPos.current = { x: e.clientX, y: e.clientY };
+    currentPos.current = { x: e.clientX, y: e.clientY };
+    if (tooltipRef.current) tooltipRef.current.style.opacity = "1";
+    rafId.current = requestAnimationFrame(animate);
+  };
+
+  const handleMouseLeave = () => {
+    isHovered.current = false;
+    if (tooltipRef.current) tooltipRef.current.style.opacity = "0";
+    cancelAnimationFrame(rafId.current);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    targetPos.current = { x: e.clientX, y: e.clientY };
+  };
+
+  useEffect(() => () => cancelAnimationFrame(rafId.current), []);
+
   return (
     <a
       href={href}
       target={href.startsWith("http") ? "_blank" : undefined}
       rel="noreferrer"
-      className="group flex items-start justify-between gap-6 bg-background p-10 transition-colors hover:bg-muted md:p-14"
+      className="group relative flex items-start justify-between gap-6 bg-background p-10 transition-colors hover:bg-muted lg:p-14 cursor-none"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
     >
       <div>
         <div className="eyebrow flex items-center gap-2 opacity-60">
@@ -268,6 +313,21 @@ function ContactTile({
         <div className="mt-5 text-xl font-medium md:text-2xl">{value}</div>
       </div>
       <ArrowRight className="size-5 shrink-0 transition-transform group-hover:translate-x-1" />
+
+      <div
+        ref={tooltipRef}
+        style={{
+          position: "fixed",
+          transform: "translate(-50%, -50%)",
+          pointerEvents: "none",
+          opacity: 0,
+          transition: "opacity 0.2s ease",
+          zIndex: 9999,
+        }}
+        className="flex size-14 items-center justify-center rounded-full bg-black text-white"
+      >
+        {hoverIcon}
+      </div>
     </a>
   );
 }
