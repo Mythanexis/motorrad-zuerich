@@ -59,19 +59,23 @@ function useStatsReveal<T extends Element>() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         const visible = entry.isIntersecting;
+        const ratio = entry.intersectionRatio;
 
-        if (visible && !wasInViewRef.current) {
+        // Entry: 20%+ visible → start animation (only when scrolling down)
+        if (ratio >= 0.2 && !wasInViewRef.current) {
+          wasInViewRef.current = true;
+          setInView(true);
           setRunCounter(scrollingDownRef.current);
         }
 
-        if (!visible) {
+        // Exit: completely gone → reset (not when just partially scrolled out)
+        if (!visible && wasInViewRef.current) {
+          wasInViewRef.current = false;
+          setInView(false);
           setRunCounter(false);
         }
-
-        wasInViewRef.current = visible;
-        setInView(visible);
       },
-      { threshold: 0.2, rootMargin: "0px 0px -8% 0px" },
+      { threshold: [0, 0.2] },
     );
 
     observer.observe(el);
