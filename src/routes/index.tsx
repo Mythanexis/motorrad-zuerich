@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Footer } from "@/components/site/Footer";
 import { Section } from "@/components/site/Section";
+import { StatsSection } from "@/components/site/StatsSection";
 import { VermietungSection } from "@/components/site/VermietungSection";
 import { courses } from "@/lib/courses";
 import heroBike from "@/assets/hero-kurs.webp";
@@ -141,22 +142,7 @@ function Index() {
 
         <VermietungSection />
 
-        {/* STATS */}
-        <Section>
-          <div className="grid gap-12 md:grid-cols-4">
-            {[
-              { n: "1’200+", l: "Ausgebildete Fahrer" },
-              { n: "12", l: "Jahre Erfahrung" },
-              { n: "1", l: "Standort · Horgen" },
-              { n: "98%", l: "Bestehensquote" },
-            ].map((s) => (
-              <div key={s.l} className="border-t border-border-strong pt-6">
-                <div className="display-md">{s.n}</div>
-                <div className="eyebrow mt-3 opacity-60">{s.l}</div>
-              </div>
-            ))}
-          </div>
-        </Section>
+        <StatsSection />
 
         {/* CTA */}
         <section className="bg-surface text-surface-foreground">
