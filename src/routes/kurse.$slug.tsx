@@ -1,6 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight, Check, ChevronRight } from "lucide-react";
-import { Footer } from "@/components/site/Footer";
 import {
   sanityClient,
   KURS_BY_SLUG_QUERY,
@@ -40,7 +39,6 @@ export const Route = createFileRoute("/kurse/$slug")({
           Zur Übersicht <ArrowRight className="size-4" />
         </Link>
       </main>
-      <Footer />
     </>
   ),
   component: CourseDetail,
@@ -340,7 +338,6 @@ function CourseDetail() {
           </section>
         )}
       </main>
-      <Footer />
     </>
   );
 }

@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { Footer } from "@/components/site/Footer";
 import { sanityClient, KURSE_QUERY, urlFor, formatDauer, type SanityKurs } from "@/lib/sanity";
 
 export const Route = createFileRoute("/kurse/")({
@@ -88,7 +87,6 @@ function KursePage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }
