@@ -12,6 +12,13 @@ export const kursSchema = defineType({
       initialValue: true,
     }),
     defineField({
+      name: "imFooterAnzeigen",
+      title: "Im Footer anzeigen",
+      type: "boolean",
+      initialValue: false,
+      description: "Kurs wird im Footer unter «Angebot» aufgelistet",
+    }),
+    defineField({
       name: "nummer",
       title: "Kursnummer",
       type: "number",

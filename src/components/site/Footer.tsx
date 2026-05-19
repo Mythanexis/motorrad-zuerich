@@ -1,6 +1,17 @@
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { sanityClient, FOOTER_KURSE_QUERY, type SanityFooterKurs } from "@/lib/sanity";
 
 export function Footer() {
+  const [kurse, setKurse] = useState<SanityFooterKurs[]>([]);
+
+  useEffect(() => {
+    sanityClient
+      .fetch<SanityFooterKurs[]>(FOOTER_KURSE_QUERY)
+      .then(setKurse)
+      .catch(() => {});
+  }, []);
+
   return (
     <footer className="bg-surface text-surface-foreground">
       <div className="mx-auto max-w-[1600px] px-6 py-20 md:px-10">
@@ -18,14 +29,20 @@ export function Footer() {
             <ul className="mt-5 space-y-3 text-sm">
               <li>
                 <Link to="/kurse" className="opacity-80 hover:opacity-100">
-                  Grundkurse
+                  Alle Kurse
                 </Link>
               </li>
-              <li>
-                <Link to="/kurse" className="opacity-80 hover:opacity-100">
-                  WAB / 2-Phasen
-                </Link>
-              </li>
+              {kurse.map((k) => (
+                <li key={k._id}>
+                  <Link
+                    to="/kurse/$slug"
+                    params={{ slug: k.slug.current }}
+                    className="opacity-80 hover:opacity-100"
+                  >
+                    {k.shortTitel}
+                  </Link>
+                </li>
+              ))}
               <li>
                 <Link to="/vermietung" className="opacity-80 hover:opacity-100">
                   Vermietung
@@ -34,6 +51,11 @@ export function Footer() {
               <li>
                 <Link to="/standorte" className="opacity-80 hover:opacity-100">
                   Standorte
+                </Link>
+              </li>
+              <li>
+                <Link to="/kontakt" className="opacity-80 hover:opacity-100">
+                  Kontakt
                 </Link>
               </li>
             </ul>

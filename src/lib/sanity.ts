@@ -95,6 +95,18 @@ export const KURS_BY_SLUG_QUERY = `*[_type == "kurs" && slug.current == $slug &&
 
 export const ALLE_SLUGS_QUERY = `*[_type == "kurs" && aktiv == true].slug.current`;
 
+export type SanityFooterKurs = {
+  _id: string;
+  slug: { current: string };
+  shortTitel: string;
+};
+
+export const FOOTER_KURSE_QUERY = `*[_type == "kurs" && aktiv == true && imFooterAnzeigen == true] | order(nummer asc) {
+  _id,
+  slug,
+  shortTitel
+}`;
+
 export type SanityMotorrad = {
   _id: string;
   nummer: number;
