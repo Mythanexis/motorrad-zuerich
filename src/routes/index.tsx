@@ -4,7 +4,13 @@ import { CTASection } from "@/components/site/CTASection";
 import { Section } from "@/components/site/Section";
 import { StatsSection } from "@/components/site/StatsSection";
 import { VermietungSection } from "@/components/site/VermietungSection";
-import { sanityClient, KURSE_QUERY, urlFor, type SanityKurs } from "@/lib/sanity";
+import {
+  sanityClient,
+  KURSE_QUERY,
+  MOTORRAEDER_COUNT_QUERY,
+  urlFor,
+  type SanityKurs,
+} from "@/lib/sanity";
 import heroBike from "@/assets/hero-kurs.webp";
 
 function W({ children, delay }: { children: React.ReactNode; delay: number }) {
@@ -19,8 +25,11 @@ function W({ children, delay }: { children: React.ReactNode; delay: number }) {
 
 export const Route = createFileRoute("/")({
   loader: async () => {
-    const kurse = await sanityClient.fetch<SanityKurs[]>(KURSE_QUERY);
-    return { kurse: kurse.slice(0, 2) };
+    const [kurse, motorradAnzahl] = await Promise.all([
+      sanityClient.fetch<SanityKurs[]>(KURSE_QUERY),
+      sanityClient.fetch<number>(MOTORRAEDER_COUNT_QUERY),
+    ]);
+    return { kurse: kurse.slice(0, 2), motorradAnzahl };
   },
   head: () => ({
     meta: [
@@ -38,7 +47,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { kurse } = Route.useLoaderData();
+  const { kurse, motorradAnzahl } = Route.useLoaderData();
   return (
     <>
       <main className="-mt-16">
@@ -137,7 +146,7 @@ function Index() {
           </div>
         </section>
 
-        <VermietungSection />
+        <VermietungSection anzahl={motorradAnzahl} />
 
         <StatsSection />
 

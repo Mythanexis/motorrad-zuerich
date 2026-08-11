@@ -107,17 +107,28 @@ export const FOOTER_KURSE_QUERY = `*[_type == "kurs" && aktiv == true && imFoote
   shortTitel
 }`;
 
+// Tomi can type "3 Tage | 12 Std" — this renders it as "3 Tage · 12 Std"
+export function formatDauer(dauer: string | undefined): string {
+  if (!dauer) return "";
+  return dauer.replace(/\s*[|/]\s*/g, " · ");
+}
+
+export type SanityMotorradSpec = {
+  bezeichnung: string;
+  wert: string;
+};
+
 export type SanityMotorrad = {
   _id: string;
   nummer: number;
   name: string;
   kategorie: string;
   tagline: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  bild: any;
-  specs: { bezeichnung: string; wert: string }[];
+  specs: SanityMotorradSpec[];
   preisTag: string;
   preisWoche: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  bild: any;
   ausgebucht: boolean;
 };
 
@@ -127,15 +138,44 @@ export const MOTORRAEDER_QUERY = `*[_type == "motorrad"] | order(nummer asc) {
   name,
   kategorie,
   tagline,
-  bild,
   specs,
   preisTag,
   preisWoche,
+  bild,
   ausgebucht
 }`;
 
-// Tomi can type "3 Tage | 12 Std" — this renders it as "3 Tage · 12 Std"
-export function formatDauer(dauer: string | undefined): string {
-  if (!dauer) return "";
-  return dauer.replace(/\s*[|/]\s*/g, " · ");
+export const MOTORRAEDER_COUNT_QUERY = `count(*[_type == "motorrad"])`;
+
+const ZAHLWORT_NEUTRAL = [
+  "Kein",
+  "Ein",
+  "Zwei",
+  "Drei",
+  "Vier",
+  "Fünf",
+  "Sechs",
+  "Sieben",
+  "Acht",
+  "Neun",
+  "Zehn",
+];
+const ZAHLWORT_FEMININ = [
+  "Keine",
+  "Eine",
+  "Zwei",
+  "Drei",
+  "Vier",
+  "Fünf",
+  "Sechs",
+  "Sieben",
+  "Acht",
+  "Neun",
+  "Zehn",
+];
+
+// Spells out small counts for German copy ("Drei Maschinen" instead of "3 Maschinen")
+export function zahlwort(count: number, genus: "neutral" | "feminin" = "feminin"): string {
+  const woerter = genus === "feminin" ? ZAHLWORT_FEMININ : ZAHLWORT_NEUTRAL;
+  return woerter[count] ?? String(count);
 }

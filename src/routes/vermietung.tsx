@@ -1,26 +1,37 @@
-import { createFileRoute, Link, useLoaderData } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { Footer } from "@/components/site/Footer";
+import {
+  sanityClient,
+  MOTORRAEDER_QUERY,
+  urlFor,
+  zahlwort,
+  type SanityMotorrad,
+} from "@/lib/sanity";
 import rentalImg from "@/assets/rental-bikes.webp";
-import { sanityClient, urlFor, MOTORRAEDER_QUERY, type SanityMotorrad } from "@/lib/sanity";
 
 export const Route = createFileRoute("/vermietung")({
-  head: () => ({
-    meta: [
-      { title: "Vermietung — Motorradkurse Zürich" },
-      {
-        name: "description",
-        content:
-          "Motorrad mieten in Horgen. Drei sorgfältig gewartete Maschinen — tageweise oder wochenweise.",
-      },
-      { property: "og:title", content: "Motorrad-Vermietung Zürich" },
-      {
-        property: "og:description",
-        content: "Drei Maschinen, kompromisslos gewartet. Mietbar in Horgen.",
-      },
-    ],
-  }),
-  loader: () => sanityClient.fetch<SanityMotorrad[]>(MOTORRAEDER_QUERY),
+  loader: async () => {
+    const motorraeder = await sanityClient.fetch<SanityMotorrad[]>(MOTORRAEDER_QUERY);
+    return { motorraeder };
+  },
+  head: ({ loaderData }) => {
+    const anzahl = loaderData?.motorraeder.length ?? 0;
+    const label = `${zahlwort(anzahl, "neutral")} ${anzahl === 1 ? "sorgfältig gewartete Maschine" : "sorgfältig gewartete Maschinen"}`;
+    return {
+      meta: [
+        { title: "Vermietung — Motorradkurse Zürich" },
+        {
+          name: "description",
+          content: `Motorrad mieten in Horgen. ${label} — tageweise oder wochenweise.`,
+        },
+        { property: "og:title", content: "Motorrad-Vermietung Zürich" },
+        {
+          property: "og:description",
+          content: `${label}, kompromisslos gewartet. Mietbar in Horgen.`,
+        },
+      ],
+    };
+  },
   component: VermietungPage,
 });
 
@@ -35,7 +46,10 @@ function W({ children, delay }: { children: React.ReactNode; delay: number }) {
 }
 
 function VermietungPage() {
-  const bikes = useLoaderData({ from: "/vermietung" });
+  const { motorraeder } = Route.useLoaderData();
+  const anzahl = motorraeder.length;
+  const anzahlWort = zahlwort(anzahl, "neutral");
+  const nomen = anzahl === 1 ? "Motorrad." : "Motorräder.";
 
   return (
     <>
@@ -53,7 +67,7 @@ function VermietungPage() {
               Vermietung
             </div>
             <h1 className="display-xl mt-6 max-w-4xl">
-              <W delay={750}>Drei</W> <W delay={870}>Motorräder.</W>
+              <W delay={750}>{anzahlWort}</W> <W delay={870}>{nomen}</W>
               <br />
               <W delay={1000}>
                 <span className="opacity-70">Eine</span>
@@ -67,73 +81,87 @@ function VermietungPage() {
 
         <section className="bg-background">
           <div className="mx-auto max-w-[1600px] space-y-6 px-6 py-20 md:px-10 md:py-28">
-            {bikes.map((b, i) => (
-              <article
-                key={b._id}
-                className={`group relative grid overflow-hidden rounded-3xl bg-surface text-surface-foreground md:min-h-[480px] md:grid-cols-12 ${
-                  i % 2 === 1 ? "md:[&>div:first-child]:order-2" : ""
-                }`}
-              >
-                {/* Image */}
-                <div className="relative md:col-span-7">
-                  <div className="aspect-4/3 w-full overflow-hidden md:aspect-auto md:h-full">
-                    <img
-                      src={urlFor(b.bild).width(900).height(720).url()}
-                      alt={b.bild?.alt ?? b.name}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                    />
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="flex flex-col justify-between gap-10 p-8 md:col-span-5 md:p-12">
-                  <div>
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <div className="eyebrow opacity-60">{b.kategorie}</div>
-                        <h2 className="display-md mt-3">{b.name}</h2>
-                      </div>
-                      <span className="text-sm opacity-40">
-                        {String(b.nummer).padStart(2, "0")}
-                      </span>
+            {motorraeder.map((b, i) => {
+              const imgSrc = b.bild
+                ? urlFor(b.bild).width(1200).height(900).auto("format").url()
+                : null;
+              return (
+                <article
+                  key={b._id}
+                  className={`group relative grid overflow-hidden rounded-3xl bg-surface text-surface-foreground md:min-h-[480px] md:grid-cols-12 ${
+                    i % 2 === 1 ? "md:[&>div:first-child]:order-2" : ""
+                  }`}
+                >
+                  {/* Image */}
+                  <div className="relative md:col-span-7">
+                    <div className="aspect-[4/3] w-full overflow-hidden md:aspect-auto md:h-full">
+                      {imgSrc ? (
+                        <img
+                          src={imgSrc}
+                          alt={b.bild?.alt ?? b.name}
+                          loading="lazy"
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        />
+                      ) : (
+                        <div className="h-full w-full bg-surface-strong" />
+                      )}
                     </div>
-                    <p className="mt-5 max-w-md text-base opacity-80">{b.tagline}</p>
-
-                    <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5">
-                      {b.specs.map((s) => (
-                        <div key={s.bezeichnung} className="border-t border-white/20 pt-3">
-                          <dt className="eyebrow opacity-60">{s.bezeichnung}</dt>
-                          <dd className="mt-1.5 text-base font-medium">{s.wert}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  </div>
-
-                  <div className="flex items-end justify-between gap-6 border-t border-white/20 pt-6">
-                    <div>
-                      <div className="eyebrow opacity-60">Tag · Woche</div>
-                      <div className="mt-2 text-base font-medium">
-                        {b.preisTag} <span className="opacity-50">/</span> {b.preisWoche}
-                      </div>
-                    </div>
-                    {b.ausgebucht ? (
-                      <span className="inline-flex cursor-not-allowed items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-medium opacity-40">
+                    {b.ausgebucht && (
+                      <span className="absolute left-4 top-4 rounded-full border border-white/40 bg-black/60 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
                         Ausgebucht
                       </span>
-                    ) : (
-                      <Link
-                        to="/kontakt"
-                        aria-label={`${b.name} reservieren`}
-                        className="inline-flex items-center gap-2 rounded-full border border-white/60 px-5 py-3 text-sm font-medium transition-colors hover:bg-white hover:text-surface"
-                      >
-                        Reservieren <ArrowRight className="size-4" />
-                      </Link>
                     )}
                   </div>
-                </div>
-              </article>
-            ))}
+
+                  {/* Content */}
+                  <div className="flex flex-col justify-between gap-10 p-8 md:col-span-5 md:p-12">
+                    <div>
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <div className="eyebrow opacity-60">{b.kategorie}</div>
+                          <h2 className="display-md mt-3">{b.name}</h2>
+                        </div>
+                        <span className="text-sm opacity-40">
+                          {String(b.nummer).padStart(2, "0")}
+                        </span>
+                      </div>
+                      <p className="mt-5 max-w-md text-base opacity-80">{b.tagline}</p>
+
+                      <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5">
+                        {(b.specs ?? []).map((s) => (
+                          <div key={s.bezeichnung} className="border-t border-white/20 pt-3">
+                            <dt className="eyebrow opacity-60">{s.bezeichnung}</dt>
+                            <dd className="mt-1.5 text-base font-medium">{s.wert}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </div>
+
+                    <div className="flex items-end justify-between gap-6 border-t border-white/20 pt-6">
+                      <div>
+                        <div className="eyebrow opacity-60">Tag · Woche</div>
+                        <div className="mt-2 text-base font-medium">
+                          {b.preisTag} <span className="opacity-50">/</span> {b.preisWoche}
+                        </div>
+                      </div>
+                      {b.ausgebucht ? (
+                        <span className="inline-flex cursor-not-allowed items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-medium opacity-40">
+                          Ausgebucht
+                        </span>
+                      ) : (
+                        <Link
+                          to="/kontakt"
+                          aria-label={`${b.name} reservieren`}
+                          className="inline-flex items-center gap-2 rounded-full border border-white/60 px-5 py-3 text-sm font-medium transition-colors hover:bg-white hover:text-surface"
+                        >
+                          Reservieren <ArrowRight className="size-4" />
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </section>
 

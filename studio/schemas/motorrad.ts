@@ -6,21 +6,16 @@ export const motorradSchema = defineType({
   type: "document",
   fields: [
     defineField({
-      name: "ausgebucht",
-      title: "Ausgebucht",
-      type: "boolean",
-      initialValue: false,
-    }),
-    defineField({
       name: "nummer",
       title: "Nummer",
       type: "number",
-      description: "Reihenfolge auf der Website (1, 2, 3 …)",
+      description: "Reihenfolge auf der Website (01, 02 …)",
     }),
     defineField({
       name: "name",
       title: "Name",
       type: "string",
+      description: 'z.B. "Yamaha MT-07"',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -33,13 +28,6 @@ export const motorradSchema = defineType({
       name: "tagline",
       title: "Tagline",
       type: "string",
-    }),
-    defineField({
-      name: "bild",
-      title: "Bild",
-      type: "image",
-      options: { hotspot: true },
-      fields: [defineField({ name: "alt", title: "Alt-Text", type: "string" })],
     }),
     defineField({
       name: "specs",
@@ -77,6 +65,21 @@ export const motorradSchema = defineType({
       title: "Preis pro Woche",
       type: "string",
       description: 'z.B. "CHF 720"',
+    }),
+    defineField({
+      name: "bild",
+      title: "Bild",
+      type: "image",
+      options: { hotspot: true },
+      fields: [defineField({ name: "alt", title: "Alt-Text", type: "string" })],
+    }),
+    defineField({
+      name: "ausgebucht",
+      title: "Ausgebucht",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "Wenn aktiviert, wird das Motorrad als ausgebucht markiert (nicht reservierbar).",
     }),
   ],
   preview: {

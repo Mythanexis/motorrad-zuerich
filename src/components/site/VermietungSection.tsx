@@ -1,10 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { zahlwort } from "@/lib/sanity";
 
 const RENTAL_IMAGE = "/assets/rental-bikes.webp";
 
 /** MYT-13 — Vermietung: Bild, Text, CTA (Vite: statisches Bild unter `public/assets/`). */
-export function VermietungSection() {
+export function VermietungSection({ anzahl }: { anzahl: number }) {
+  const maschinenLabel = `${zahlwort(anzahl, "feminin")} ${anzahl === 1 ? "Maschine" : "Maschinen"}.`;
+
   return (
     <section className="bg-surface text-surface-foreground">
       <div className="mx-auto grid max-w-[1600px] grid-cols-1 gap-0 md:grid-cols-2">
@@ -20,7 +23,7 @@ export function VermietungSection() {
         <div className="flex flex-col justify-center px-6 py-20 md:px-16 md:py-32">
           <div className="eyebrow opacity-60">02 — Vermietung</div>
           <h2 className="display-lg mt-4">
-            Drei Maschinen.
+            {maschinenLabel}
             <br />
             <span className="opacity-60">Bereit, wenn Sie es sind.</span>
           </h2>
