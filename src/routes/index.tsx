@@ -2,7 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Footer } from "@/components/site/Footer";
 import { Section } from "@/components/site/Section";
-import { sanityClient, KURSE_QUERY, urlFor, type SanityKurs } from "@/lib/sanity";
+import {
+  sanityClient,
+  KURSE_QUERY,
+  MOTORRAEDER_COUNT_QUERY,
+  urlFor,
+  zahlwort,
+  type SanityKurs,
+} from "@/lib/sanity";
 import heroBike from "@/assets/hero-kurs.webp";
 import rentalImg from "@/assets/rental-bikes.jpg";
 
@@ -18,8 +25,11 @@ function W({ children, delay }: { children: React.ReactNode; delay: number }) {
 
 export const Route = createFileRoute("/")({
   loader: async () => {
-    const kurse = await sanityClient.fetch<SanityKurs[]>(KURSE_QUERY);
-    return { kurse: kurse.slice(0, 2) };
+    const [kurse, motorradAnzahl] = await Promise.all([
+      sanityClient.fetch<SanityKurs[]>(KURSE_QUERY),
+      sanityClient.fetch<number>(MOTORRAEDER_COUNT_QUERY),
+    ]);
+    return { kurse: kurse.slice(0, 2), motorradAnzahl };
   },
   head: () => ({
     meta: [
@@ -37,7 +47,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { kurse } = Route.useLoaderData();
+  const { kurse, motorradAnzahl } = Route.useLoaderData();
+  const maschinenLabel = `${zahlwort(motorradAnzahl, "feminin")} ${motorradAnzahl === 1 ? "Maschine" : "Maschinen"}.`;
   return (
     <>
       <main className="-mt-16">
@@ -150,7 +161,7 @@ function Index() {
             <div className="flex flex-col justify-center px-6 py-20 md:px-16 md:py-32">
               <div className="eyebrow opacity-60">02 — Vermietung</div>
               <h2 className="display-lg mt-4">
-                Drei Maschinen.
+                {maschinenLabel}
                 <br />
                 <span className="opacity-60">Bereit, wenn Sie es sind.</span>
               </h2>
