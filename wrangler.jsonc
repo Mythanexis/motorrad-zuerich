@@ -1,7 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "tanstack-start-app",
+  "name": "motorradkurse-zuerich",
   "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat"],
   "main": "src/server.ts",
+  "env": {
+    "staging": {
+      "name": "motorradkurse-zuerich-staging",
+    },
+  },
 }
